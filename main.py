@@ -1,7 +1,9 @@
 running = True
-autenticated = False
+autenticated = 0
+archivoUsuarios = "usuarios_simulados.csv"
+historialGlobales = "historial_global.csv"
 while running:
-    if autenticated == False:
+    if autenticated == 0:
         print("\n1. Iniciar Sesión:")
         print("2. Registrar Nuevo Usuario")
         print("3. Salir")
@@ -38,15 +40,45 @@ while running:
             case "5":
                 acercaDe()
             case "6":
-                autenticated = False
+                autenticated = 0
                 print("Cerrando sesión. Por favor, inicia sesión nuevamente.")
             case _:
                 print("Opción no válida, por favor elige una opción del 1 al 6.")
+    
+    
     def logIn():
-        print("Función de inicio de sesión no implementada aún.")
-
+        global autenticated
+        userInput = input("Ingrese su nombre de usuario: ")
+        passwordInput = input("Ingrese su contraseña: ")
+        try:
+            with open(archivoUsuarios, 'r') as archivo:
+                for index, linea in enumerate(archivo):
+                    user, password = linea.strip().split(',')
+                    if user == userInput and password == passwordInput:
+                        autenticated = index + 1
+                        print(f"Bienvenido, {userInput}!")
+                        return
+                print("Usuario o contraseña incorrectos. Inténtalo de nuevo.")
+        except FileNotFoundError:
+            print("Archivo de usuarios no encontrado. Por favor, registre un usuario primero.")
+        
     def register():
-        print("Función de registro de usuario no implementada aún.")
+        username = input("Ingrese un nombre de usuario: ")
+        password = input("Ingrese una contraseña: ")
+
+        try:
+            with open(archivoUsuarios, 'r') as archivo:
+                for linea in archivo:
+                    user, _ = linea.strip().split(',')
+                    if user == username:
+                        print("El nombre de usuario ya está registrado. Intente con otro.")
+                        return
+        except FileNotFoundError:
+            pass
+        with open(archivoUsuarios, 'a') as archivo:
+            archivo.write(f"{username},{password}\n")
+            print(f"Usuario {username} registrado exitosamente.")
+            
     def consultarClima():
         print("Función de consulta de clima no implementada aún.")
     def historialPersonal():
