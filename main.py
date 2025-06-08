@@ -1,7 +1,7 @@
 running = True
 autenticated = False
-archivoUsuarios = "tpfinal\usuarios_simulados.csv"
-historialGlobales = "tpfinal\historial_global.csv"
+archivoUsuarios = "usuarios_simulados.csv"
+historialGlobales = "historial_global.csv"
 
 def logIn():
         global autenticated
