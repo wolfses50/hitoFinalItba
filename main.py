@@ -1,7 +1,11 @@
+import requests
+import json 
+
 running = True
 autenticated = False
 archivoUsuarios = "usuarios_simulados.csv"
 historialGlobales = "historial_global.csv"
+api_key = "tu_api_key_aqui"  # Reemplaza con tu propia API key de OpenWeatherMap
 
 def logIn():
         global autenticated
@@ -40,6 +44,32 @@ def register():
 
 def consultarClima():
     ciudad = input("Ingrese el nombre de la ciudad para consultar el clima: ")
+    base_url = "https://api.openweathermap.org/data/2.5/weather"
+    parametros = {
+                    'q': ciudad,
+                    'appid': api_key,
+                    'units': 'metric',
+                    'lang': 'es'
+    }
+    print(f"\nConsultando el clima (OpenWeatherMap) para: {ciudad}...")
+    try:
+        response = requests.get(base_url, params=parametros,timeout=10)
+        response.raise_for_status()
+        datos_clima = response.json()
+        return datos_clima
+    except requests.exceptions.HTTPError as errh:
+        if response.status_code == 401:
+            print(f"Error de autenticación OWM: API Key inválida.")
+        elif response.status_code == 404:
+            print(f"Error OWM: Ciudad '{ciudad}' no encontrada.")
+        else:
+            print(f"Error HTTP OWM: {errh}")
+        return None
+    except requests.exceptions.RequestException as err:
+        print(f"Error de conexión/petición OWM: {err}")
+    except json.JSONDecodeError:
+        print("Error OWM: La respuesta de la API no es JSON válido.")
+
 
 def historialPersonal():
     print("Función de historial personal no implementada aún.")
