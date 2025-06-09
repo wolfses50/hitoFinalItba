@@ -128,8 +128,44 @@ def historialPersonal():
     except Exception as e:
         print(f"Error inesperado: {e}")
 
-def exportarHistorial():
-    print("Función de exportación de historial no implementada aún.")
+def exportarHistorialEstadisticas():
+    try:
+        with open(historialGlobales, 'r') as archivo_historial:
+            historial = archivo_historial.readlines()
+            if not historial:
+                print("El historial global está vacío. No hay datos para analizar.")
+                return
+
+            # Contar las apariciones de cada ciudad
+            conteo_ciudades = {}
+            temperaturas =[]
+            for linea in historial:
+                datos = linea.strip().split(',')
+                ciudad = datos[0].lower()  # Convertir a minúsculas para evitar problemas de mayúsculas/minúsculas
+                temperatura = float(datos[1])
+                temperaturas.append(temperatura)
+                if ciudad in conteo_ciudades:
+                    conteo_ciudades[ciudad] += 1
+                else:
+                    conteo_ciudades[ciudad] = 1
+
+            # Encontrar la ciudad con más consultas
+            ciudad_mas_consultada = max(conteo_ciudades, key=conteo_ciudades.get)
+            cantidad_consultas = conteo_ciudades[ciudad_mas_consultada]
+
+            # Calcular el número total de consultas
+            total_consultas = len(historial)
+            temp_promedio = sum(temperaturas) / len(temperaturas)
+            # Mostrar estadísticas
+            print(f"\nEstadísticas globales del historial:")
+            print(f"- Número total de consultas realizadas: {total_consultas}")
+            print(f"- La ciudad con más consultas es '{ciudad_mas_consultada.capitalize()}' con {cantidad_consultas} consultas.")
+            print(f"- Temperatura promedio entre todas las consultas: {temp_promedio:.2f}°C")
+
+    except FileNotFoundError:
+        print(f"Error: El archivo '{historialGlobales}' no existe. Asegúrate de que el historial global esté disponible.")
+    except Exception as e:
+        print(f"Error inesperado: {e}")
 
 def ia():
     print("Función de IA no implementada aún.")
@@ -169,7 +205,7 @@ while running:
             case "2":
                 historialPersonal()
             case "3":
-                exportarHistorial()            
+                exportarHistorialEstadisticas()
             case "4":
                 ia()
             case "5":
