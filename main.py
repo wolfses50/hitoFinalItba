@@ -88,6 +88,7 @@ def consultarClima():
         print("\nGuardando en historial global...")
         with open(historialGlobales, 'a') as archivo_historial:
             archivo_historial.write(f"{ciudad},{temperatura},{sensacion_termica},{humedad},{descripcion},{velocidad_viento}\n")
+            # historialGlobales_excel = historialGlobales.to_excel("hG_excel.xlsx")
 
     except requests.exceptions.HTTPError as errh:
         if response.status_code == 401:
@@ -209,7 +210,7 @@ para gráficos.
 "Los Pros"
 1. Ulises Wolfzun
 2. Julieta Guerson
-3. Ana Gerl
+3. Ana Gerly
 4. Dalila Sardi
 5. Sofia Patron
 ==============
