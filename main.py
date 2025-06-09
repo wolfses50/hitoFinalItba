@@ -171,7 +171,49 @@ def ia():
     print("Función de IA no implementada aún.")
     
 def acercaDe():
-    print("Función de información acerca de no implementada aún.")
+    print("""
+===Acerca de===
+Este programa se llama GuardianClimaITBA
+y es una aplicación de consola que permite 
+a los usuarios consultar el clima actual de
+diferentes ciudades, registrar sus consultas 
+y ver estadísticas globales de uso. 
+===============
+          
+===Uso===
+Los usuarios pueden iniciar sesión, registrarse,
+consultar el clima, ver su historial personal,
+exportar estadísticas globales y recibir recomendaciones
+de vestimenta basadas en el clima actual.
+==========
+          
+===Precauciones===
+El programa almacena las credenciales como son cargadas
+y no implementa medidas de seguridad avanzadas. Es solo
+para uso educativo y no debe usarse con claves reales.
+Existe el "hasheo" el cual permite trasncirbir las contraeñas
+a un formato no legible e irreversible. Pero se puede comparar
+con la contraseña ingresada por el usuario. Y asi saber si es
+correcta o no.
+Tanto la IA como la API para datos de clima son ajenas a nostros
+no contamos con control sobre ellas. Y el uso de los datos que se
+inrgesan en esta
+==================
+
+falta: 
+▪ Obtención de datos de clima y guardado de historial global.
+▪ Generación de estadísticas globales y preparación del CSV
+para gráficos.
+          
+===Miembros===
+"Los Pros"
+1. Ulises Wolfzun
+2. Julieta Guerson
+3. Ana Gerl
+4. Dalila Sardi
+5. Sofia Patron
+==============
+""")
 
 while running:
     if autenticated == False:
