@@ -1,3 +1,4 @@
+#tetasss
 import requests
 import json 
 import os
@@ -5,8 +6,8 @@ from dotenv import load_dotenv
 load_dotenv()
 running = True
 autenticated = False
-archivoUsuarios = "usuarios_simulados.csv"
-historialGlobales = "historial_global.csv"
+archivoUsuarios = "hitoFinalItba/usuarios_simulados.csv"
+historialGlobales = "hitoFinalItba/historial_global.csv"
 api_key = os.getenv("key")
 
 def logIn():
