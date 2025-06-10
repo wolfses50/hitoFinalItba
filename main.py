@@ -255,23 +255,32 @@ def exportarHistorialEstadisticas():
 
 # Función de IA (placeholder, aún no implementada)
 
-
 def ia(api_key_gemini, temperatura, condicion_climatica, viento, humedad):
-    # #obtiene un consejo  de vestimenta de gemini
-    # print("Función de IA no implementada aún.")
-    # try: 
-    #     genai.configure(api_key=api_key_gemini)
-    #     response = client.models.generate_content(
-    #    model="gemini-2.0-flash",
-    #     contents="Explain how AI works in a few words",
-    #     )
-    #     print("Generando consejo  de vestimenta con nuestro fiel amigo, GEMINI YAAAAYY")
-    #     print(response.text)
-
+    client = genai.Client(api_key=api_key_gemini)
+     
+     #obtiene un consejo  de vestimenta de gemini
+    print("Función de IA no implementada aún.")
+    try: 
+        genai.configure(api_key=api_key_gemini)
+        model = genai.GenerativeModel('gemini-pro')
+        prompt_diseñado_por_equipo = (
+         f"Que me pongo hoy ?"   
+        )
+        print("\nGenerando consejo de vestimenta con IA...")
+        response = model.generate_content(prompt_diseñado_por_equipo)
+        if response.text:
+            return response.text
+        else:
+            print("La IA no pudo generar un consejo. Razón (si está disponible):", response.prompt_feedback)
+            return "No se pudo generar un consejo en este momento."
+                #genera el contenido
+    except Exception as e:
+        print(f"Error al contactar la API de Gemini o procesar la respuesta: {e}")
+        return "Error al generar el consejo de IA."
 # función para mostrar información acerca del programa
 
 
-    def acercaDe():
+def acercaDe():
         print("""
 ===Acerca de===
 Este programa se llama GuardianClimaITBA
