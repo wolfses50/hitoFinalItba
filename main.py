@@ -1,4 +1,5 @@
 import requests
+from google import genai
 import json
 import os
 from dotenv import load_dotenv
@@ -255,14 +256,23 @@ def exportarHistorialEstadisticas():
 # Función de IA (placeholder, aún no implementada)
 
 
-def ia():
-    print("Función de IA no implementada aún.")
+def ia(api_key_gemini, temperatura, condicion_climatica, viento, humedad):
+    # #obtiene un consejo  de vestimenta de gemini
+    # print("Función de IA no implementada aún.")
+    # try: 
+    #     genai.configure(api_key=api_key_gemini)
+    #     response = client.models.generate_content(
+    #    model="gemini-2.0-flash",
+    #     contents="Explain how AI works in a few words",
+    #     )
+    #     print("Generando consejo  de vestimenta con nuestro fiel amigo, GEMINI YAAAAYY")
+    #     print(response.text)
 
 # función para mostrar información acerca del programa
 
 
-def acercaDe():
-    print("""
+    def acercaDe():
+        print("""
 ===Acerca de===
 Este programa se llama GuardianClimaITBA
 y es una aplicación de consola que permite 
