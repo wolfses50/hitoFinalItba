@@ -273,8 +273,10 @@ def ia(temperatura, sensacion_termica, viento, humedad, condicion_climatica, ciu
             f"- Viento: {viento} m/s\n"
             f"- Humedad: {humedad}%\n"
             f"Sé claro y directo con una sugerencia útil para vestimenta. Comienza tu respuesta mencionando la ciudad"
+            f"formateala de manera que quede lindo en una terminal de consola, ponele MUCHOS emojis.\n"
+            f"no hagas un resuemen al final1"
         )
-        print("\nGenerando consejo de vestimenta con IA...")
+        print("\n⚙️⚙️⚙️Generando consejo de vestimenta con IA⚙️⚙️⚙️")
         response = model.generate_content(prompt_diseñado_por_equipo)
         if response.text:
             print(response.text)
@@ -413,7 +415,7 @@ while running:
                         ciudad=datos["ciudad"]
                     )
                 else:
-                    print("PATO CONTROLA EL CLIMA JAJAJAJJA")
+                    print("Error al obtener el último registro del usuario.")
                     
             case "5":
                 acercaDe()
