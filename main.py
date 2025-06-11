@@ -1,7 +1,8 @@
 import requests
-from google import genai
+import google.generativeai as genai
 import json
 import os
+# from env import api_gemini_key
 from dotenv import load_dotenv
 import datetime
 load_dotenv()
@@ -142,6 +143,7 @@ def consultarClima():
             usuario = usernameg if usernameg else "Anonimo"
             archivo_historial.write(
                 f"{usuario},{ciudad},{fecha_hora},{temperatura},{sensacion_termica},{humedad},{descripcion},{velocidad_viento}\n")
+        return temperatura, ciudad, sensacion_termica, humedad, descripcion, velocidad_viento
     # Manejo de errores de la API
     except requests.exceptions.HTTPError as errh:
         if response.status_code == 401:
@@ -255,20 +257,26 @@ def exportarHistorialEstadisticas():
 
 # Función de IA (placeholder, aún no implementada)
 
-def ia(api_key_gemini, temperatura, condicion_climatica, viento, humedad):
-    client = genai.Client(api_key=api_key_gemini)
+def ia(api_key_gemini, temperatura, sensacion_termica, viento, humedad, condicion_climatica, ciudad):
      
      #obtiene un consejo  de vestimenta de gemini
-    print("Función de IA no implementada aún.")
     try: 
         genai.configure(api_key=api_key_gemini)
-        model = genai.GenerativeModel('gemini-pro')
-        prompt_diseñado_por_equipo = (
-         f"Que me pongo hoy ?"   
+        model = genai.GenerativeModel('gemini-2.0-flash')
+        prompt_diseñado_por_equipo =(
+            f"Hola, dime qué ropa debería usar hoy considerando estos datos:\n"
+            f"- Ciudad: {ciudad}°C\n"
+            f"- Temperatura: {temperatura}°C\n"
+            f"- Sensación térmica: {sensacion_termica}\n"
+            f"- Condición climática: {condicion_climatica}\n"
+            f"- Viento: {viento} m/s\n"
+            f"- Humedad: {humedad}%\n"
+            f"Sé claro y directo con una sugerencia útil para vestimenta. Comienza tu respuesta mencionando la ciudad"
         )
         print("\nGenerando consejo de vestimenta con IA...")
         response = model.generate_content(prompt_diseñado_por_equipo)
         if response.text:
+            print(response.text)
             return response.text
         else:
             print("La IA no pudo generar un consejo. Razón (si está disponible):", response.prompt_feedback)
@@ -277,9 +285,36 @@ def ia(api_key_gemini, temperatura, condicion_climatica, viento, humedad):
     except Exception as e:
         print(f"Error al contactar la API de Gemini o procesar la respuesta: {e}")
         return "Error al generar el consejo de IA."
+#funcion para extraer la info del historial_global.csv para usar en la ia
+def obtenerUltimoRegistroUsuario():
+     try:
+         with open(historialGlobales, 'r') as archivo:
+             lineas = archivo.readlines()
+             # Buscar desde el final el último registro del usuario autenticado
+             for linea in reversed(lineas):
+                 datos = linea.strip().split(',')
+                 if datos[0] == usernameg:
+                     return {
+                         "usuario": datos[0],
+                         "ciudad": datos[1],
+                         "fecha": datos[2],
+                         "temperatura": float(datos[3]),
+                         "sensacion_termica": float(datos[4]),
+                         "humedad": int(datos[5]),
+                         "descripcion": datos[6],
+                         "velocidad_viento": float(datos[7])
+                     }
+         print("No se encontraron registros en el historial para el usuario.")
+         return None
+     except FileNotFoundError:
+         print(f"Error: El archivo '{historialGlobales}' no existe.")
+         return None
+     except Exception as e:
+         print(f"Error inesperado al leer el historial: {e}")
+         return None
+
+
 # función para mostrar información acerca del programa
-
-
 def acercaDe():
         print("""
 ===Acerca de===
@@ -364,7 +399,22 @@ while running:
             case "3":
                 exportarHistorialEstadisticas()
             case "4":
-                ia()
+                #PRIMERO EXTRAIGO LA INFO DEL ULTIMO REGISTRO
+                datos = obtenerUltimoRegistroUsuario()
+                #si existen estos datos --> se asignan a cada parametro
+                if datos:
+                    ia(
+                        api_key_gemini="AIzaSyCCP-Gd-213vu-Kc9Sabyjk2VBBtBpWm4g",
+                        temperatura=datos["temperatura"],
+                        sensacion_termica=datos["sensacion_termica"],
+                        viento=datos["velocidad_viento"],
+                        humedad=datos["humedad"],
+                        condicion_climatica=datos["descripcion"],
+                        ciudad=datos["ciudad"]
+                    )
+                else:
+                    print("PATO CONTROLA EL CLIMA JAJAJAJJA")
+                    
             case "5":
                 acercaDe()
             case "6":
