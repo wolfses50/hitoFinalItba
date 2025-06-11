@@ -11,6 +11,7 @@ autenticated = False
 archivoUsuarios = "usuarios_simulados.csv"
 historialGlobales = "historial_global.csv"
 api_key = os.getenv("key")
+gemini = os.getenv("gemini")
 usernameg = ""
 
 # Funcion para inicio de sesion
@@ -257,11 +258,11 @@ def exportarHistorialEstadisticas():
 
 # Función de IA (placeholder, aún no implementada)
 
-def ia(api_key_gemini, temperatura, sensacion_termica, viento, humedad, condicion_climatica, ciudad):
+def ia(temperatura, sensacion_termica, viento, humedad, condicion_climatica, ciudad):
      
      #obtiene un consejo  de vestimenta de gemini
     try: 
-        genai.configure(api_key=api_key_gemini)
+        genai.configure(api_key=gemini)
         model = genai.GenerativeModel('gemini-2.0-flash')
         prompt_diseñado_por_equipo =(
             f"Hola, dime qué ropa debería usar hoy considerando estos datos:\n"
@@ -404,7 +405,6 @@ while running:
                 #si existen estos datos --> se asignan a cada parametro
                 if datos:
                     ia(
-                        api_key_gemini="AIzaSyCCP-Gd-213vu-Kc9Sabyjk2VBBtBpWm4g",
                         temperatura=datos["temperatura"],
                         sensacion_termica=datos["sensacion_termica"],
                         viento=datos["velocidad_viento"],
