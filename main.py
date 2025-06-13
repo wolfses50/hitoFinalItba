@@ -127,12 +127,12 @@ def consultarClima():
         velocidad_viento = datos_clima['wind']['speed']
 
         # Mostrar los datos del clima
-        print(f"\nClima en {ciudad.capitalize()}:")
-        print(f"Temperatura: {temperatura}°C")
-        print(f"Sensación Térmica: {sensacion_termica}°C")
-        print(f"Humedad: {humedad}%")
-        print(f"Descripción: {descripcion.capitalize()}")
-        print(f"Velocidad del Viento: {velocidad_viento} m/s")
+        print(f"\nClima en {ciudad.capitalize()}: 🌤️")
+        print(f"Temperatura: {temperatura}°C 🌡️")
+        print(f"Sensación Térmica: {sensacion_termica}°C 🤒")
+        print(f"Humedad: {humedad}% 💧")
+        print(f"Descripción: {descripcion.capitalize()} 📖")
+        print(f"Velocidad del Viento: {velocidad_viento} m/s 🍃")
 
         # Guardar en historial global
         print("\nGuardando en historial global...")
