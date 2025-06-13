@@ -48,6 +48,80 @@ Contamos con un unico archivo `main.py` que contiene la logica del programa, un 
 ```
 
 ## Funcionamiento:
-El archivo programa `main.py` contiene un bucle princial que va mostrando opciones. Una vez que se autentifican las credenciales del usuario, se tiene acceso a las distintas funciones del programa relacionadas con el clima.
+El archivo programa `main.py` contiene un bucle princial que va mostrando opciones. Una vez que se autentifican las credenciales del usuario, se tiene acceso a las distintas funciones del programa relacionadas con el clima:
 
-Al registrarse un usuario por primera vez, se le pedirá que su contraseña cumpla con ciertos criterios mínimos de seguridad, entre ellos que contenga al menos 12 caracteres, que incluya mayúsculas, minúsculas, números y símbolos.
+    1. Consultar el clima actual de una ciudad (con datos como temperatura, humedad, viento, etc.).
+    2. Guardar automáticamente cada consulta en un historial global.
+    3. Ver su historial personal filtrado por ciudad.
+    4. Ver estadísticas de uso a nivel global (ciudad más consultada, temperatura promedio, etc.).
+    5. Recibir un consejo de vestimenta personalizado generado con IA (Google Gemini).
+    6. Ver información del programa y sus autores.
+    7. Cerrar sesión para volver al menú de acceso.
+
+## Validación de Contraseñas
+Al registrarse un usuario por primera vez, el sistema valida que su contraseña cumpla con al menos 3 de los siguientes 5 criterios mínimos de seguridad:
+
+    1. Longitud mínima de 12 caracteres
+    2. Incluir al menos una letra mayúscula
+    3. Incluir al menos una letra minúscula
+    4. Incluir al menos un número
+    5. Incluir al menos un símbolo (como !@#$%^&*)
+
+Si la contraseña no cumple, el programa muestra claramente qué criterios no fueron cumplidos y sugiere una contraseña segura generada aleatoriamente.
+
+Ejemplo sugerido por el sistema:
+```bash
+Ejemplo de contraseña segura: T3k@WzrNp1$aqPZc
+```
+## Manejo de Archivos
+usuarios_simulados.csv: Contiene nombre de usuario y contraseña. Las contraseñas están en texto plano por fines educativos.
+
+historial_global.csv: Guarda todas las consultas climáticas con:
+    Usuario
+    Ciudad
+    Fecha y hora
+    Temperatura
+    Sensación térmica
+    Humedad
+    Descripción del clima
+    Velocidad del viento
+
+## Estadísticas Globales
+La aplicación analiza todos los registros del archivo historial_global.csv y calcula:
+
+    Ciudad más consultada (o ciudades empatadas)
+    Número total de consultas
+    Temperatura promedio global
+    Este archivo puede usarse luego para generar gráficos de barra, línea o torta (fuera del programa, con Excel o Google Sheets).
+
+## Inteligencia Artificial
+Se utiliza la API de Google Gemini para generar un consejo de vestimenta personalizado, según:
+    Ciudad
+    Temperatura
+    Sensación térmica
+    Condición climática
+    Humedad
+    Viento
+
+La respuesta de la IA es decorada con emojis y redactada amigablemente para ser leída en consola.
+
+## Precauciones
+Este programa es educativo y no implementa cifrado real de contraseñas.
+No se recomienda usar contraseñas reales en este sistema.
+El acceso a las APIs depende de proveedores externos (OpenWeatherMap y Google Gemini).
+La respuesta de la IA puede variar y no siempre será precisa.
+
+## Créditos
+Grupo: Los Pros
+
+    Ulises Wolfzun
+
+    Julieta Guerson
+
+    Ana Gerly
+
+    Dalila Sardi
+
+    Sofía Patrón
+
+Proyecto desarrollado para el Challenge Tecnológico Integrador - ITBA.
