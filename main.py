@@ -23,7 +23,7 @@ usernameg = ""
 def logIn():
     global autenticated
     while True:
-        print("Si desea salir del inicio de sesión, escriba 'salir'.")
+        print("Si desea salir del inicio de sesión, escriba 'salir' ❌.")
         userInput = input("Ingrese su nombre de usuario: ")
         if userInput.lower() == "salir":
             print("Saliendo del inicio de sesión.")
@@ -42,10 +42,10 @@ def logIn():
                         usernameg = userInput
                         print(f"Bienvenido, {userInput}!")
                         return
-            print("Usuario o contraseña incorrectos. Inténtalo de nuevo.")
+            print("Usuario o contraseña incorrectos. Inténtalo de nuevo. 🤔")
         except FileNotFoundError:
             print(
-                "Archivo de usuarios no encontrado. Por favor, registre un usuario primero.")
+                "Archivo de usuarios no encontrado. Por favor, registre un usuario primero. 😥")
             return
 
 
@@ -90,7 +90,7 @@ def generar_contraseña_segura(longitud=16):
 # Función para registrar un nuevo usuario
 def register():
     # pedimos el nombre de usuario y contraseña
-    print("Si desea salir del inicio de sesión, escriba 'salir'.")
+    print("Si desea salir del inicio de sesión, escriba 'salir'. ❌")
     username = input("Ingrese un nombre de usuario: ")
     if username.lower() == "salir":
         print("Saliendo del registro.")
@@ -103,7 +103,7 @@ def register():
                 # Recuperamos el usuario de cada línea
                 user, _ = linea.strip().split(',')
                 if user == username:
-                    print("El nombre de usuario ya está registrado. Intente con otro.")
+                    print("El nombre de usuario ya está registrado. 🤔 Intente con otro.")
                     return
     except FileNotFoundError:
         pass
@@ -131,8 +131,8 @@ def register():
     # Guardamos el nuevo usuario y contraseña en el archivo
     with open(archivoUsuarios, 'a') as archivo:
         archivo.write(f"{username},{password}\n")
-        print(f"Usuario {username} registrado exitosamente.")
-        # Verificamos que el usuario esta autentificado para mandarlo al menu princial
+        print(f"Usuario {username} registrado exitosamente. 😻")
+        # Verificamos que el usuario esta auternticado para mandarlo al menu princial
         # Almacenamos el nombre de usuario en una variable publica
         global autenticated
         global usernameg
@@ -142,14 +142,14 @@ def register():
 # Función para consultar el clima de una ciudad usando la API de OpenWeatherMap
 def consultarClima():
     # Pedimos el nombre de la ciudad
-    print("Si desea salir del inicio de sesión, escriba 'salir'.")
+    print("Si desea salir del inicio de sesión, escriba 'salir'. ❌")
     ciudad = input(
-        "Ingrese el nombre de la ciudad para consultar el clima: ").strip()
+        "Ingrese el nombre de la ciudad para consultar el clima: 🏙️").strip()
     if ciudad.lower() == "salir":
         print("Saliendo de la consulta del clima.")
         return
     if not ciudad:
-        print("Error: Debes ingresar el nombre de una ciudad.")
+        print("Error: Debes ingresar el nombre de una ciudad. 😡")
         return
 
     base_url = "https://api.openweathermap.org/data/2.5/weather"
@@ -160,7 +160,7 @@ def consultarClima():
         'lang': 'es'
     }
 
-    print(f"\nConsultando el clima (OpenWeatherMap) para: {ciudad}...")
+    print(f"\nConsultando el clima (OpenWeatherMap) para: {ciudad} 🤔...")
     try:
         # Hacemos la request y recuperamos la respuesta en formato json
         response = requests.get(base_url, params=parametros, timeout=10)
@@ -181,12 +181,12 @@ def consultarClima():
         velocidad_viento = datos_clima['wind']['speed']
 
         # Mostrar los datos del clima
-        print(f"\nClima en {ciudad.capitalize()}:")
-        print(f"Temperatura: {temperatura}°C")
-        print(f"Sensación Térmica: {sensacion_termica}°C")
-        print(f"Humedad: {humedad}%")
-        print(f"Descripción: {descripcion.capitalize()}")
-        print(f"Velocidad del Viento: {velocidad_viento} m/s")
+        print(f"\nClima en {ciudad.capitalize()}: 🌤️")
+        print(f"Temperatura: {temperatura}°C 🌡️")
+        print(f"Sensación Térmica: {sensacion_termica}°C 🤒")
+        print(f"Humedad: {humedad}% 💧")
+        print(f"Descripción: {descripcion.capitalize()} 📖")
+        print(f"Velocidad del Viento: {velocidad_viento} m/s 🍃")
 
         # Guardar en historial global
         print("\nGuardando en historial global...")
@@ -223,8 +223,8 @@ def historialPersonal():
             historial = archivo_historial.readlines()
             # Abrimos el historial global y pedimos por la ciudad
             ciudad = input(
-                "Ingrese el nombre de la ciudad para ver su historial: ").strip()
-            print("Si desea salir del inicio de sesión, escriba 'salir'.")
+                "Ingrese el nombre de la ciudad para ver su historial: 🏙️").strip()
+            print("Si desea salir del inicio de sesión, escriba 'salir'. ❌")
             if ciudad.lower() == "salir":
                 print("Saliendo del historial personal.")
                 return
@@ -247,10 +247,10 @@ def historialPersonal():
                     contador += 1
                     datos = linea.strip().split(',')
                     print(
-                        f"nro:{contador}°\nCiudad: {datos[1]} \nTemperatura: {datos[2]}°C \nSensación Térmica: {datos[3]}°C \nHumedad: {datos[4]}% \nDescripción: {datos[5]} \nVelocidad del Viento: {datos[6]} m/s \nFecha y Hora: {datos[7]}\n")
+                        f"nro:{contador}°\nCiudad 🏙️: {datos[1]} \nTemperatura 🌡️: {datos[3]}°C \nSensación Térmica 🤒: {datos[4]}°C \nHumedad 💧: {datos[5]}% \nDescripción 📖: {datos[6]} \nVelocidad del Viento 🍃: {datos[7]} m/s \nFecha y Hora ⏱️: {datos[2]}\n")
             if not encontrado:
                 print(
-                    f"No se encontraron registros para la ciudad '{ciudad}' en el historial personal.")
+                    f"No se encontraron registros para la ciudad '{ciudad}' en el historial personal. 🤯")
     # Manejo de errores al abrir el archivo
     except FileNotFoundError:
         print(
@@ -264,11 +264,14 @@ def historialPersonal():
 def exportarHistorialEstadisticas():
     try:
         with open(historialGlobales, 'r') as archivo_historial:
-            # Verificamos si el archivo de historial global no esté vacío
             historial = archivo_historial.readlines()
             if not historial:
                 print("El historial global está vacío. No hay datos para analizar.")
                 return
+
+            # Saltar el encabezado
+            if historial[0].strip().startswith("usuario"):
+                historial = historial[1:]
 
             # Contar las apariciones de cada ciudad
             # y alcamcenamos todas las temperaturas para luego sacar la promedio
@@ -276,7 +279,7 @@ def exportarHistorialEstadisticas():
             temperaturas = []
             for linea in historial:
                 datos = linea.strip().split(',')
-                # Convertir a minúsculas para evitar problemas de mayúsculas/minúsculas
+                #Usamos coma como separador de campos y ponemos en minisculas
                 ciudad = datos[1].lower()
                 temperatura = float(datos[3])
                 temperaturas.append(temperatura)
@@ -286,31 +289,32 @@ def exportarHistorialEstadisticas():
                     conteo_ciudades[ciudad] += 1
                 else:
                     conteo_ciudades[ciudad] = 1
-
+            
             # Usamos max() para encontrar la ciudad con el mayor número de consultas.
             # Después, guardamos cuántas veces fue consultada esa ciudad.
-            ciudad_mas_consultada = max(
-                conteo_ciudades, key=conteo_ciudades.get)
-            cantidad_consultas = conteo_ciudades[ciudad_mas_consultada]
+            max_consultas = max(conteo_ciudades.values())
+            ciudades_mas_consultadas = [ciudad for ciudad, cantidad in conteo_ciudades.items() if cantidad == max_consultas]
 
             # Calcular el número total de consultas
             total_consultas = len(historial)
             temp_promedio = sum(temperaturas) / len(temperaturas)
-            # Mostrar estadísticas
-            print(f"\nEstadísticas globales del historial:")
+
+            #Mostramos las estadísticas
+            print(f"\nEstadísticas globales del historial: 🌎")
             print(f"- Número total de consultas realizadas: {total_consultas}")
-            print(
-                f"- La ciudad con más consultas es '{ciudad_mas_consultada.capitalize()}' con {cantidad_consultas} consultas.")
-            print(
-                f"- Temperatura promedio entre todas las consultas: {temp_promedio:.2f}°C")
-    # Manejo de errores al abrir el archivo
+            if len(ciudades_mas_consultadas) == 1:
+                print(f"- La ciudad con más consultas es '{ciudades_mas_consultadas[0].capitalize()} 👑' con {max_consultas} consultas.")
+            else:
+                ciudades_str = ', '.join([c.capitalize() for c in ciudades_mas_consultadas])
+                print(f"- Las ciudades con más consultas son: {ciudades_str} 👑, cada una con {max_consultas} consultas.")
+                print(f"- Temperatura promedio entre todas las consultas: {temp_promedio:.2f}°C 🌡️")
+    #Manejo de errores al abrir el archivo
     except FileNotFoundError:
         print(
             f"Error: El archivo '{historialGlobales}' no existe. Asegúrate de que el historial global esté disponible.")
     except Exception as e:
         print(f"Error inesperado: {e}")
-
-# Función de IA (placeholder, aún no implementada)
+# Función de IA
 
 def ia(temperatura, sensacion_termica, viento, humedad, condicion_climatica, ciudad):
      
@@ -422,9 +426,9 @@ while running:
     # Mostramos el menú de iniicio siempre y cuando el usuario no este autenticado
     # Y el bool running sea False, es decir que no se "salio" del programa
     if autenticated == False:
-        print("\n1. Iniciar Sesión:")
-        print("2. Registrar Nuevo Usuario")
-        print("3. Salir")
+        print("\n1. Iniciar Sesión: 🪪")
+        print("2. Registrar Nuevo Usuario: 📝")
+        print("3. Salir del Programa: ❌")
 
         option = input("\nElige una opción (1-3): ")
         match option:
@@ -435,17 +439,17 @@ while running:
             case "3":
                 # Si el usuario elige salir, cambiamos el bool running a False
                 running = False
-                print("Saliendo del programa. ¡Hasta luego!")
+                print("Saliendo del programa. ¡Hasta luego! 👋")
             case _:
-                print("Opción no válida, por favor elige una opción del 1 al 3.")
+                print("Opción no válida, por favor elige una opción del 1 al 3. 😡")
     else:
         # Osea el usuario SI esta autenticado aqui
-        print("\n1. Consultar Clima Actual y Guardar en Historial Global")
-        print("2. Ver Mi Historial Personal de Consultas por Ciudad")
-        print("3. Estadísticas Globales de Uso y Exportar Historial Completo")
+        print("\n1. Consultar Clima Actual y Guardar en Historial Global 🌤️")
+        print("2. Ver Mi Historial Personal de Consultas por Ciudad 🙍")
+        print("3. Estadísticas Globales de Uso y Exportar Historial Completo 📊")
         print("4. ¿Cómo Me Visto Hoy? 🧥🤖")
-        print("5. Acerca de...")
-        print("6. Cerrar Sesión")
+        print("5. Acerca de... ❓")
+        print("6. Cerrar Sesión 🔒")
 
         option = input("\nElige una opción (1-6): ")
         match option:
@@ -477,6 +481,6 @@ while running:
                 # Si el usuario elige cerrar sesión, cambiamos el bool autenticated a False
                 # y vuelve al bucle del menú de inicio
                 autenticated = False
-                print("Cerrando sesión. Por favor, inicia sesión nuevamente.")
+                print("Cerrando sesión. Por favor, inicia sesión nuevamente. 👋")
             case _:
-                print("Opción no válida, por favor elige una opción del 1 al 6.")
+                print("Opción no válida, por favor elige una opción del 1 al 6. 😡")
