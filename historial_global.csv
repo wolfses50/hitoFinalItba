@@ -1,1 +1,14 @@
 usuario,ciudad,fecha_hora,temperatura,sensacion,humedad,descripcion,velocidad
+Sofi,Londres,2025-06-13 18:51:24,20.35,20.5,79,lluvia de gran intensidad,4.63
+Sofi,Madrid,2025-06-13 18:52:12,24.86,24.32,35,cielo claro,2.06
+Sofi,Atenas,2025-06-13 18:53:07,26.38,26.38,47,algo de nubes,2.68
+Sofi,BArcelona,2025-06-13 18:53:36,24.52,24.72,65,cielo claro,3.09
+usuario123,Berlin,2025-06-13 18:54:52,17.33,16.53,54,cielo claro,3.09
+usuario123,Boston,2025-06-13 18:55:32,20.66,20.35,60,nubes dispersas,3.58
+Persona,Barcelona,2025-06-13 19:01:40,24.52,24.72,65,cielo claro,3.09
+Persona,Londres,2025-06-13 19:01:55,20.21,20.35,79,lluvia de gran intensidad,4.63
+Persona,Chicago,2025-06-13 19:02:46,19.93,20.17,84,nubes,0.45
+Persona,Nueva York,2025-06-13 19:04:26,35.37,35.44,31,cielo claro,7.52
+Cata,Londres,2025-06-13 19:06:25,20.23,20.35,78,lluvia moderada,4.63
+Cata,Barcelona,2025-06-13 19:06:43,24.52,24.72,65,cielo claro,3.09
+Cata,Chicago,2025-06-13 19:07:00,20.23,20.48,83,niebla,4.63
