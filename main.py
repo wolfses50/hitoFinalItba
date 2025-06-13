@@ -210,11 +210,14 @@ def historialPersonal():
 def exportarHistorialEstadisticas():
     try:
         with open(historialGlobales, 'r') as archivo_historial:
-            # Verificamos si el archivo de historial global no esté vacío
             historial = archivo_historial.readlines()
             if not historial:
                 print("El historial global está vacío. No hay datos para analizar.")
                 return
+
+            # Saltar el encabezado
+            if historial[0].strip().startswith("usuario"):
+                historial = historial[1:]
 
             # Contar las apariciones de cada ciudad
             # y alcamcenamos todas las temperaturas para luego sacar la promedio
@@ -222,7 +225,7 @@ def exportarHistorialEstadisticas():
             temperaturas = []
             for linea in historial:
                 datos = linea.strip().split(',')
-                # Convertir a minúsculas para evitar problemas de mayúsculas/minúsculas
+                #Usamos coma como separador de campos y ponemos en minisculas
                 ciudad = datos[1].lower()
                 temperatura = float(datos[3])
                 temperaturas.append(temperatura)
@@ -232,31 +235,32 @@ def exportarHistorialEstadisticas():
                     conteo_ciudades[ciudad] += 1
                 else:
                     conteo_ciudades[ciudad] = 1
-
+            
             # Usamos max() para encontrar la ciudad con el mayor número de consultas.
             # Después, guardamos cuántas veces fue consultada esa ciudad.
-            ciudad_mas_consultada = max(
-                conteo_ciudades, key=conteo_ciudades.get)
-            cantidad_consultas = conteo_ciudades[ciudad_mas_consultada]
+            max_consultas = max(conteo_ciudades.values())
+            ciudades_mas_consultadas = [ciudad for ciudad, cantidad in conteo_ciudades.items() if cantidad == max_consultas]
 
             # Calcular el número total de consultas
             total_consultas = len(historial)
             temp_promedio = sum(temperaturas) / len(temperaturas)
-            # Mostrar estadísticas
+
+            #Mostramos las estadísticas
             print(f"\nEstadísticas globales del historial: 🌎")
             print(f"- Número total de consultas realizadas: {total_consultas}")
-            print(
-                f"- La ciudad con más consultas es '{ciudad_mas_consultada.capitalize()} 👑' con {cantidad_consultas} consultas.")
-            print(
-                f"- Temperatura promedio entre todas las consultas: {temp_promedio:.2f}°C 🌡️")
-    # Manejo de errores al abrir el archivo
+            if len(ciudades_mas_consultadas) == 1:
+                print(f"- La ciudad con más consultas es '{ciudades_mas_consultadas[0].capitalize()} 👑' con {max_consultas} consultas.")
+            else:
+                ciudades_str = ', '.join([c.capitalize() for c in ciudades_mas_consultadas])
+                print(f"- Las ciudades con más consultas son: {ciudades_str} 👑, cada una con {max_consultas} consultas.")
+                print(f"- Temperatura promedio entre todas las consultas: {temp_promedio:.2f}°C 🌡️")
+    #Manejo de errores al abrir el archivo
     except FileNotFoundError:
         print(
             f"Error: El archivo '{historialGlobales}' no existe. Asegúrate de que el historial global esté disponible.")
     except Exception as e:
         print(f"Error inesperado: {e}")
-
-# Función de IA (placeholder, aún no implementada)
+# Función de IA
 
 def ia(temperatura, sensacion_termica, viento, humedad, condicion_climatica, ciudad):
      
