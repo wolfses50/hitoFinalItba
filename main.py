@@ -1,4 +1,5 @@
 import requests
+import re
 import google.generativeai as genai
 import json
 import os
@@ -45,8 +46,36 @@ def logIn():
                 "Archivo de usuarios no encontrado. Por favor, registre un usuario primero.")
             return
 
-# Función para registrar un nuevo usuario
 
+# --- Función para validar contraseña segura ---
+def validar_contraseña(password):
+    errores = []
+
+    # Criterio 1: Longitud mínima de 12 caracteres
+    if len(password) < 12:
+        errores.append("tener al menos 12 caracteres")
+
+    # Criterio 2: Contener letras mayúsculas
+    if not re.search(r"[A-Z]", password):
+        errores.append("incluir al menos una letra mayúscula")
+
+    # Criterio 3: Contener letras minúsculas
+    if not re.search(r"[a-z]", password):
+        errores.append("incluir al menos una letra minúscula")
+
+    # Criterio 4: Contener al menos un número
+    if not re.search(r"[0-9]", password):
+        errores.append("incluir al menos un número")
+
+    # Criterio 5: Contener al menos un símbolo
+    if not re.search(r"[!@#$%^&*()_\-+=]", password):
+        errores.append("incluir al menos un símbolo (como !, @, #, etc.)")
+
+    return errores
+
+
+
+# Función para registrar un nuevo usuario
 
 def register():
     # pedimos el nombre de usuario y contraseña
@@ -55,10 +84,7 @@ def register():
     if username.lower() == "salir":
         print("Saliendo del registro.")
         return
-    password = input("Ingrese una contraseña: ")
-    if password.lower() == "salir":
-        print("Saliendo del registro.")
-        return
+    
     try:
         # Verificamos que el usuario no este repetido
         with open(archivoUsuarios, 'r') as archivo:
@@ -70,13 +96,29 @@ def register():
                     return
     except FileNotFoundError:
         pass
-    # revisar que contra cumpla con 3 criterios vistos en clase --> SOFI
+
+    while True:
+        password = input("Ingrese una contraseña: ")
+        if password.lower() == "salir":
+            print("Saliendo del registro.")
+            return
+        
+        # Validamos que la contraseña cumpla al menos 3 criterios
+        errores = validar_contraseña(password)
+        if len(errores) > 2:
+            print("\nTu contraseña no es lo suficientemente segura.")
+            print("No cumple con los siguientes criterios:")
+            for error in errores:
+                print(f"- Debe {error}")
+            print("\nSugerencia: Usá una contraseña de al menos 12 caracteres, que incluya mayúsculas, minúsculas, números y símbolos.")
+        else:    
+            return
 
     # Guardamos el nuevo usuario y contraseña en el archivo
     with open(archivoUsuarios, 'a') as archivo:
         archivo.write(f"{username},{password}\n")
         print(f"Usuario {username} registrado exitosamente.")
-        # Verificamos que el usuario esta auternticado para mandarlo al menu princial
+        # Verificamos que el usuario esta autentificado para mandarlo al menu princial
         # Almacenamos el nombre de usuario en una variable publica
         global autenticated
         global usernameg
@@ -84,8 +126,6 @@ def register():
         autenticated = True
 
 # Función para consultar el clima de una ciudad usando la API de OpenWeatherMap
-
-
 def consultarClima():
     # Pedimos el nombre de la ciudad
     print("Si desea salir del inicio de sesión, escriba 'salir'.")
