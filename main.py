@@ -1,5 +1,7 @@
 import requests
 import re
+import random
+import string
 import google.generativeai as genai
 import json
 import os
@@ -73,10 +75,20 @@ def validar_contraseña(password):
 
     return errores
 
-
+#Funcion para generar una contraseña segura sugerida para el usuario
+def generar_contraseña_segura(longitud=16):
+    caracteres = string.ascii_letters + string.digits + "!@#$%^&*()_-+="
+    while True:
+        password = ''.join(random.choice(caracteres) for _ in range(longitud))
+        # validamos con los mismos criterios que en validar_contraseña
+        if (any(c.islower() for c in password) and
+            any(c.isupper() for c in password) and
+            any(c.isdigit() for c in password) and
+            any(c in "!@#$%^&*()_-+=" for c in password)):
+            return password
+        
 
 # Función para registrar un nuevo usuario
-
 def register():
     # pedimos el nombre de usuario y contraseña
     print("Si desea salir del inicio de sesión, escriba 'salir'.")
@@ -110,7 +122,10 @@ def register():
             print("No cumple con los siguientes criterios:")
             for error in errores:
                 print(f"- Debe {error}")
+            # Generamos y mostramos una sugerencia segura aleatoria
+            sugerencia = generar_contraseña_segura()
             print("\nSugerencia: Usá una contraseña de al menos 12 caracteres, que incluya mayúsculas, minúsculas, números y símbolos.")
+            print(f"Ejemplo de contraseña segura: {sugerencia}")
         else:    
             return
 
