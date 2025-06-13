@@ -126,7 +126,8 @@ def register():
             print("\nSugerencia: Usá una contraseña de al menos 12 caracteres, que incluya mayúsculas, minúsculas, números y símbolos.")
             print(f"Ejemplo de contraseña segura: {sugerencia}")
         else:    
-            return
+            print("Tu contraseña es segura. ✅")
+            break
 
     # Guardamos el nuevo usuario y contraseña en el archivo
     with open(archivoUsuarios, 'a') as archivo:
