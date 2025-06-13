@@ -25,7 +25,7 @@ Para ejecutar el programa,
 3. Sistema operativo: Windows, macOS o Linux
 
 ## Variables de Entorno (.env)
-Crear un archivo llamado .env en la raíz del proyecto con el siguiente contenido:
+Crear un archivo llamado `.env` en la raíz del proyecto con el siguiente contenido:
 
 ```ini
 key=TU_API_KEY_DE_OPENWEATHERMAP
@@ -73,6 +73,7 @@ Ejemplo sugerido por el sistema:
 ```bash
 Ejemplo de contraseña segura: T3k@WzrNp1$aqPZc
 ```
+
 ## Manejo de Archivos
 usuarios_simulados.csv: Contiene nombre de usuario y contraseña. Las contraseñas están en texto plano por fines educativos.
 
@@ -112,7 +113,7 @@ El acceso a las APIs depende de proveedores externos (OpenWeatherMap y Google Ge
 La respuesta de la IA puede variar y no siempre será precisa.
 
 ## Créditos
-Grupo: Los Pros
+Grupo: 
 
     Ulises Wolfzun
 
