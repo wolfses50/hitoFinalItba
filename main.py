@@ -20,7 +20,7 @@ usernameg = ""
 def logIn():
     global autenticated
     while True:
-        print("Si desea salir del inicio de sesión, escriba 'salir'.")
+        print("Si desea salir del inicio de sesión, escriba 'salir' ❌.")
         userInput = input("Ingrese su nombre de usuario: ")
         if userInput.lower() == "salir":
             print("Saliendo del inicio de sesión.")
@@ -39,10 +39,10 @@ def logIn():
                         usernameg = userInput
                         print(f"Bienvenido, {userInput}!")
                         return
-            print("Usuario o contraseña incorrectos. Inténtalo de nuevo.")
+            print("Usuario o contraseña incorrectos. Inténtalo de nuevo. 🤔")
         except FileNotFoundError:
             print(
-                "Archivo de usuarios no encontrado. Por favor, registre un usuario primero.")
+                "Archivo de usuarios no encontrado. Por favor, registre un usuario primero. 😥")
             return
 
 # Función para registrar un nuevo usuario
@@ -50,7 +50,7 @@ def logIn():
 
 def register():
     # pedimos el nombre de usuario y contraseña
-    print("Si desea salir del inicio de sesión, escriba 'salir'.")
+    print("Si desea salir del inicio de sesión, escriba 'salir'. ❌")
     username = input("Ingrese un nombre de usuario: ")
     if username.lower() == "salir":
         print("Saliendo del registro.")
@@ -66,7 +66,7 @@ def register():
                 # Recuperamos el usuario de cada línea
                 user, _ = linea.strip().split(',')
                 if user == username:
-                    print("El nombre de usuario ya está registrado. Intente con otro.")
+                    print("El nombre de usuario ya está registrado. 🤔 Intente con otro.")
                     return
     except FileNotFoundError:
         pass
@@ -75,7 +75,7 @@ def register():
     # Guardamos el nuevo usuario y contraseña en el archivo
     with open(archivoUsuarios, 'a') as archivo:
         archivo.write(f"{username},{password}\n")
-        print(f"Usuario {username} registrado exitosamente.")
+        print(f"Usuario {username} registrado exitosamente. 😻")
         # Verificamos que el usuario esta auternticado para mandarlo al menu princial
         # Almacenamos el nombre de usuario en una variable publica
         global autenticated
@@ -88,14 +88,14 @@ def register():
 
 def consultarClima():
     # Pedimos el nombre de la ciudad
-    print("Si desea salir del inicio de sesión, escriba 'salir'.")
+    print("Si desea salir del inicio de sesión, escriba 'salir'. ❌")
     ciudad = input(
-        "Ingrese el nombre de la ciudad para consultar el clima: ").strip()
+        "Ingrese el nombre de la ciudad para consultar el clima: 🏙️").strip()
     if ciudad.lower() == "salir":
         print("Saliendo de la consulta del clima.")
         return
     if not ciudad:
-        print("Error: Debes ingresar el nombre de una ciudad.")
+        print("Error: Debes ingresar el nombre de una ciudad. 😡")
         return
 
     base_url = "https://api.openweathermap.org/data/2.5/weather"
@@ -106,7 +106,7 @@ def consultarClima():
         'lang': 'es'
     }
 
-    print(f"\nConsultando el clima (OpenWeatherMap) para: {ciudad}...")
+    print(f"\nConsultando el clima (OpenWeatherMap) para: {ciudad} 🤔...")
     try:
         # Hacemos la request y recuperamos la respuesta en formato json
         response = requests.get(base_url, params=parametros, timeout=10)
@@ -169,8 +169,8 @@ def historialPersonal():
             historial = archivo_historial.readlines()
             # Abrimos el historial global y pedimos por la ciudad
             ciudad = input(
-                "Ingrese el nombre de la ciudad para ver su historial: ").strip()
-            print("Si desea salir del inicio de sesión, escriba 'salir'.")
+                "Ingrese el nombre de la ciudad para ver su historial: 🏙️").strip()
+            print("Si desea salir del inicio de sesión, escriba 'salir'. ❌")
             if ciudad.lower() == "salir":
                 print("Saliendo del historial personal.")
                 return
@@ -193,10 +193,10 @@ def historialPersonal():
                     contador += 1
                     datos = linea.strip().split(',')
                     print(
-                        f"nro:{contador}°\nCiudad: {datos[1]} \nTemperatura: {datos[2]}°C \nSensación Térmica: {datos[3]}°C \nHumedad: {datos[4]}% \nDescripción: {datos[5]} \nVelocidad del Viento: {datos[6]} m/s \nFecha y Hora: {datos[7]}\n")
+                        f"nro:{contador}°\nCiudad 🏙️: {datos[1]} \nTemperatura 🌡️: {datos[3]}°C \nSensación Térmica 🤒: {datos[4]}°C \nHumedad 💧: {datos[5]}% \nDescripción 📖: {datos[6]} \nVelocidad del Viento 🍃: {datos[7]} m/s \nFecha y Hora ⏱️: {datos[2]}\n")
             if not encontrado:
                 print(
-                    f"No se encontraron registros para la ciudad '{ciudad}' en el historial personal.")
+                    f"No se encontraron registros para la ciudad '{ciudad}' en el historial personal. 🤯")
     # Manejo de errores al abrir el archivo
     except FileNotFoundError:
         print(
@@ -243,12 +243,12 @@ def exportarHistorialEstadisticas():
             total_consultas = len(historial)
             temp_promedio = sum(temperaturas) / len(temperaturas)
             # Mostrar estadísticas
-            print(f"\nEstadísticas globales del historial:")
+            print(f"\nEstadísticas globales del historial: 🌎")
             print(f"- Número total de consultas realizadas: {total_consultas}")
             print(
-                f"- La ciudad con más consultas es '{ciudad_mas_consultada.capitalize()}' con {cantidad_consultas} consultas.")
+                f"- La ciudad con más consultas es '{ciudad_mas_consultada.capitalize()} 👑' con {cantidad_consultas} consultas.")
             print(
-                f"- Temperatura promedio entre todas las consultas: {temp_promedio:.2f}°C")
+                f"- Temperatura promedio entre todas las consultas: {temp_promedio:.2f}°C 🌡️")
     # Manejo de errores al abrir el archivo
     except FileNotFoundError:
         print(
@@ -368,9 +368,9 @@ while running:
     # Mostramos el menú de iniicio siempre y cuando el usuario no este autenticado
     # Y el bool running sea False, es decir que no se "salio" del programa
     if autenticated == False:
-        print("\n1. Iniciar Sesión:")
-        print("2. Registrar Nuevo Usuario")
-        print("3. Salir")
+        print("\n1. Iniciar Sesión: 🪪")
+        print("2. Registrar Nuevo Usuario: 📝")
+        print("3. Salir del Programa: ❌")
 
         option = input("\nElige una opción (1-3): ")
         match option:
@@ -381,17 +381,17 @@ while running:
             case "3":
                 # Si el usuario elige salir, cambiamos el bool running a False
                 running = False
-                print("Saliendo del programa. ¡Hasta luego!")
+                print("Saliendo del programa. ¡Hasta luego! 👋")
             case _:
-                print("Opción no válida, por favor elige una opción del 1 al 3.")
+                print("Opción no válida, por favor elige una opción del 1 al 3. 😡")
     else:
         # Osea el usuario SI esta autenticado aqui
-        print("\n1. Consultar Clima Actual y Guardar en Historial Global")
-        print("2. Ver Mi Historial Personal de Consultas por Ciudad")
-        print("3. Estadísticas Globales de Uso y Exportar Historial Completo")
+        print("\n1. Consultar Clima Actual y Guardar en Historial Global 🌤️")
+        print("2. Ver Mi Historial Personal de Consultas por Ciudad 🙍")
+        print("3. Estadísticas Globales de Uso y Exportar Historial Completo 📊")
         print("4. ¿Cómo Me Visto Hoy? 🧥🤖")
-        print("5. Acerca de...")
-        print("6. Cerrar Sesión")
+        print("5. Acerca de... ❓")
+        print("6. Cerrar Sesión 🔒")
 
         option = input("\nElige una opción (1-6): ")
         match option:
@@ -423,6 +423,6 @@ while running:
                 # Si el usuario elige cerrar sesión, cambiamos el bool autenticated a False
                 # y vuelve al bucle del menú de inicio
                 autenticated = False
-                print("Cerrando sesión. Por favor, inicia sesión nuevamente.")
+                print("Cerrando sesión. Por favor, inicia sesión nuevamente. 👋")
             case _:
-                print("Opción no válida, por favor elige una opción del 1 al 6.")
+                print("Opción no válida, por favor elige una opción del 1 al 6. 😡")
