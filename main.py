@@ -72,7 +72,6 @@ def validar_contraseña(password):
     # Criterio 5: Contener al menos un símbolo
     if not re.search(r"[!@#$%^&*()_\-+=]", password):
         errores.append("incluir al menos un símbolo (como !, @, #, etc.)")
-
     return errores
 
 #Funcion para generar una contraseña segura sugerida para el usuario
