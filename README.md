@@ -35,6 +35,8 @@ Estas claves se usan para acceder a:
     OpenWeatherMap (consultar clima actual)
     Google Gemini (sugerencias de vestimenta mediante IA)
 
+De este modo, las claves quedan almacenadas de forma segura ya que no quedan en el repositorio.
+
 ## Estructura del proyecto:
 Contamos con un unico archivo `main.py` que contiene la logica del programa, un archivo `requirements.txt` que contiene las dependencias necesarias para su ejecucion, dos archivos de csv `historial_gloabl.csv` y `usuarios_simulados.csv` que contienen los datos de los usuarios y el historial de todos los usuarios.
 
