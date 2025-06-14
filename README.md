@@ -126,8 +126,8 @@ Grupo:
 
     Ana Gerli
 
-    Dalila Sardi
+    Dalila Ayelen Sardi
 
-    Sofía Patrón
+    Sofía Patrón Costas
 
 Proyecto desarrollado para el Challenge Tecnológico Integrador - ITBA.

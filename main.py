@@ -31,23 +31,19 @@ def logIn():
             return
         else:
             confirmar = input(f"¿Confirma su nombre de usuario?: '{userInput}'\n\033[1mEscriba si/no: \033[0m")
-            if confirmar.lower() == "si":
-                pass
-            else: 
-                print("[bold italic]Saliendo del inicio de sesión. 😢[/bold italic]")
-                return
+            if confirmar.lower() != "si":
+                print("[bold italic]Reiniciando inicio de sesión. 🔄[/bold italic]")
+                continue #reinicia el bucle
             
         passwordInput = input("\n🔐 Ingrese su contraseña: ")
         if passwordInput.lower() == "salir":
-            print("[bold italic]Saliendo del inicio de sesión. 😢[/bold italic]")
+            print("[bold italic]Reinician. 😢[/bold italic]")
             return
         else:
             confirmar = input("¿Confirmar contraseña e iniciar sesión?\n\033[1mEscriba si/no: \033[0m")
-            if confirmar == "si":
-                pass
-            else:
-                print("[bold italic]Saliendo del inicio de sesión. 😥[/bold italic]")
-                return
+            if confirmar.lower() != "si":
+                print("[bold italic]Reiniciando inicio de sesión. 🔄[/bold italic]")
+                continue
         try:
             with open(archivoUsuarios, 'r') as archivo:
                 for linea in archivo:
@@ -56,12 +52,15 @@ def logIn():
                         autenticated = True
                         global usernameg
                         usernameg = userInput
-                        print(f"Bienvenido, {userInput}!")
+                        print(f"[bold magenta]\nBienvenid@, {userInput}![/bold magenta]")
                         return
             print("[bold italic]Usuario o contraseña incorrectos. Inténtalo de nuevo. 🤔[/bold italic]")
         except FileNotFoundError:
             print(
                 "[bold italic red]Archivo de usuarios no encontrado. Por favor, registre un usuario primero. 😥[/bold italic red]")
+            return
+        except Exception as e:
+            print(f"[red]Error inesperado: {e}[/red]")
             return
 
 
@@ -105,77 +104,81 @@ def generar_contraseña_segura(longitud=16):
 
 # -- Función para registrar un nuevo usuario --
 def register():
-    # Pedimos el nombre de usuario y contraseña
-    print("Si desea salir del registro de usuario, escriba [underline]salir[/underline]. ❌")
-    username = input("👤 Ingrese un nombre de usuario: ")
-    if username.lower() == "salir":
-        print("[bold italic]Saliendo del registro.[bold italic]")
-        return
-    else:
-        confirmar = input(f"¿Confirmar nombre de usuario?: '{username}'\n\033[1mEscriba si/no: \033[0m")
-        if confirmar.lower() == "si":
-            pass
-        else: 
-            print("[bold italic]Saliendo del inicio de sesión. 😢[/bold italic]")
-            return
-            
-    try:
-        # Verificamos que el usuario no este repetido
-        with open(archivoUsuarios, 'r') as archivo:
-            for linea in archivo:
-                # Recuperamos el usuario de cada línea
-                user, _ = linea.strip().split(',')
-                if user == username:
-                    print("[bold italic red]El nombre de usuario ya está registrado. 🤔 Intente con otro.[/bold italic red]")
-                    return
-    except FileNotFoundError:
-        pass
-
     while True:
-        password = input("🔐 Ingrese una contraseña: ")
-        if password.lower() == "salir":
-            print("[bold italic]Saliendo del registro.[bold italic]")
+        print("[bold blue]\n---------- REGISTRO DE USUARIO ----------[/bold blue]")
+        # Pedimos el nombre de usuario y contraseña
+        print("Si desea salir del registro de usuario, escriba [underline]salir[/underline]. ❌")
+        username = input("👤 Ingrese un nombre de usuario: ")
+        if username.lower() == "salir":
+            print("[bold italic]Saliendo del registro de usuario. 😞[bold italic]")
             return
-        
-        # Validamos que la contraseña cumpla al menos 3 criterios
-        errores = validar_contraseña(password)
-        if len(errores) > 2:
-            print("\n[red]Tu contraseña no es lo suficientemente segura.[/red]")
-            print("No cumple con los siguientes criterios:")
-            for error in errores:
-                print(f"[dim yellow]- Debe {error}[/dim yellow]")
-            # Generamos y mostramos una sugerencia segura aleatoria
-            sugerencia = generar_contraseña_segura()
-            print("\nSugerencia: Usá una contraseña de al menos 12 caracteres, que incluya mayúsculas, minúsculas, números y símbolos.")
-            print(f"Ejemplo de contraseña segura: {sugerencia}")
-            print("\nSi desea salir del registro de usuario, escriba [underline]salir[/underline]. ❌")
-        else:    
-            print("Tu contraseña es segura. ✅")
-            passw = input(f"Reescriba contraseña: ")
-            if passw == password:
-                pass
-            else: 
-                print("[bold italic red]Las contraseñas no coinciden. Saliendo del registro de usuario. 😢[/bold italic red]")
-                return  
-            break
+        else:
+            confirmar = input(f"¿Confirmar nombre de usuario?: '{username}'\n\033[1mEscriba si/no: \033[0m")
+            if confirmar.lower() != "si":
+                print("[bold italic]Reiniciando registro de usuario. 🔄[bold italic]")
+                continue
+                
+        try:
+            # Verificamos que el usuario no este repetido
+            with open(archivoUsuarios, 'r') as archivo:
+                for linea in archivo:
+                    # Recuperamos el usuario de cada línea
+                    user, _ = linea.strip().split(',')
+                    if user == username:
+                        print("[bold italic red]El nombre de usuario ya está registrado. 🤔 Intente con otro.[/bold italic red]")
+                        return
+        except FileNotFoundError:
+            print("Archivo no encontrado.💥⚠. Saliendo de inicio de sesión.")
+            return
+        except Exception as e:
+            print(f"[red]Error inesperado: {e}[/red]. \nSaliendo de inicio de sesión.")
+            return
 
-    # Guardamos el nuevo usuario y contraseña en el archivo
-    with open(archivoUsuarios, 'a') as archivo:
-        archivo.write(f"{username},{password}\n")
-        print(f"Usuario {username} registrado exitosamente. 😻")
-        # Verificamos que el usuario esta auternticado para mandarlo al menu princial
-        # Almacenamos el nombre de usuario en una variable publica
-        global autenticated
-        global usernameg
-        usernameg = username
-        autenticated = True
+        while True:
+            password = input("🔐 Ingrese una contraseña: ")
+            if password.lower() == "salir":
+                print("[bold italic]Saliendo del registro.[bold italic]")
+                return
+            
+            # Validamos que la contraseña cumpla al menos 3 criterios
+            errores = validar_contraseña(password)
+            if len(errores) > 2:
+                print("\n[red]Tu contraseña no es lo suficientemente segura.[/red]")
+                print("No cumple con los siguientes criterios:")
+                for error in errores:
+                    print(f"[dim yellow]- Debe {error}[/dim yellow]")
+                # Generamos y mostramos una sugerencia segura aleatoria
+                sugerencia = generar_contraseña_segura()
+                print("\nSugerencia: Usá una contraseña de al menos 12 caracteres, que incluya mayúsculas, minúsculas, números y símbolos.")
+                print(f"Ejemplo de contraseña segura: {sugerencia}")
+                print("\nSi desea salir del registro de usuario, escriba [underline]salir[/underline]. ❌")
+            else:    
+                print("[green] Tu contraseña es segura. [/green]✅")
+                passw = input(f"Reescriba contraseña: ")
+                if passw == password:
+                    pass
+                else: 
+                    print("[bold italic red]Las contraseñas no coinciden 🤨. Reinténtelo 🔄. [/bold italic red]")
+                    continue  
+                break
+
+        # Guardamos el nuevo usuario y contraseña en el archivo
+        with open(archivoUsuarios, 'a') as archivo:
+            archivo.write(f"{username},{password}\n")
+            print(f"[green]Usuario {username} registrado exitosamente. 😻[/green]")
+            # Verificamos que el usuario esta auternticado para mandarlo al menu princial
+            # Almacenamos el nombre de usuario en una variable publica
+            global autenticated
+            global usernameg
+            usernameg = username
+            autenticated = True
+            return
 
 # Función para consultar el clima de una ciudad usando la API de OpenWeatherMap
 def consultarClima():
     # Pedimos el nombre de la ciudad
-    print("Si desea salir del inicio de sesión, escriba [underline]salir[/underline]. ❌")
-    ciudad = input(
-        "Ingrese el nombre de la ciudad para consultar el clima: 🏙️").strip()
+    print("Si desea volver al menú, escriba [underline]salir[/underline]. ❌")
+    ciudad = input("Ingrese el nombre de la ciudad para consultar el clima: 🏙️  ").strip()
     if ciudad.lower() == "salir":
         print("[bold italic]Saliendo de la consulta del clima.[/bold italic]")
         return
@@ -200,8 +203,8 @@ def consultarClima():
 
         # Verifica si se obtuvieron datos válidos
         if not datos_clima or 'main' not in datos_clima:
-            print(
-                f"No se pudieron obtener los datos del clima para '{ciudad}'.")
+            print(f"[bold italic red]No se pudieron obtener los datos del clima para '{ciudad}'. ⚠[/bold italic red]"
+                "Volviendo al menu principal 🔙")
             return
 
         # Extraer datos del clima
@@ -212,12 +215,13 @@ def consultarClima():
         velocidad_viento = datos_clima['wind']['speed']
 
         # Mostrar los datos del clima
-        print(f"\nClima en {ciudad.capitalize()}: 🌤️")
-        print(f"Temperatura: {temperatura}°C 🌡️")
-        print(f"Sensación Térmica: {sensacion_termica}°C 🤒")
-        print(f"Humedad: {humedad}% 💧")
-        print(f"Descripción: {descripcion.capitalize()} 📖")
-        print(f"Velocidad del Viento: {velocidad_viento} m/s 🍃")
+        print(f"\n[bold]Clima en {ciudad.capitalize()} 🌤️...[/bold]")
+        print(f"[bold]Temperatura:[/bold] [cyan]{temperatura}°C [/cyan]🌡️")
+        print(f"[bold]Sensación Térmica:[/bold] [cyan]{sensacion_termica}°C [/cyan]🤒")
+        print(f"[bold]Humedad:[/bold] [cyan]{humedad}% 💧")
+        print(f"[bold]Descripción:[/bold] [cyan]{descripcion.capitalize()} 📖[/cyan]")
+        print(f"[bold]Velocidad del Viento:[/bold] [cyan]{velocidad_viento} m/s 🍃[/cyan]")
+        
 
         # Guardar en historial global
         print("\nGuardando en historial global.")
@@ -229,46 +233,58 @@ def consultarClima():
             usuario = usernameg if usernameg else "Anonimo"
             archivo_historial.write(
                 f"{usuario},{ciudad},{fecha_hora},{temperatura},{sensacion_termica},{humedad},{descripcion},{velocidad_viento}\n")
-        return temperatura, ciudad, sensacion_termica, humedad, descripcion, velocidad_viento
+        print("✅ Guardado")
+        #return temperatura, ciudad, sensacion_termica, humedad, descripcion, velocidad_viento
+        back = input("[italic]Presione enter si quiere volver atrás. [/italic]")
+        print("[bold italic]Volviendo a menu principal 🔙[/bold italic]")
+    
     # Manejo de errores de la API
     except requests.exceptions.HTTPError as errh:
         if response.status_code == 401:
-            print("Error de autenticación OWM: API Key inválida.")
+            print("[red]Error de autenticación OWM: API Key inválida.[/red]"
+            "\n Volviendo a menu principal.") # OWM: OpenWeatherMap
+            return
         elif response.status_code == 404:
-            print(f"Error OWM: Ciudad '{ciudad}' no encontrada.")
+            print(f"[red]Error OWM: Ciudad '{ciudad}' no encontrada.[/red]"
+            "\n Volviendo a menu principal.") # OWM: OpenWeatherMap
+            return
         else:
-            print(f"Error HTTP OWM: {errh}")
+            print(f"[red]Error HTTP OWM: {errh}[/red]"
+            "\n Volviendo a menu principal.") # OWM: OpenWeatherMap
+            return
     except requests.exceptions.RequestException as err:
-        print(f"Error de conexión/petición OWM: {err}")
+        print(f"[red]Error de conexión/petición OWM: {err}[/red]"
+        "\n Volviendo a menu principal.") # OWM: OpenWeatherMap
+        return
     except json.JSONDecodeError:
-        print("Error OWM: La respuesta de la API no es JSON válido.")
+        print("[red]Error OWM: La respuesta de la API no es JSON válido.[/red]"
+        "\n Volviendo a menu principal.") # OWM: OpenWeatherMap
+        return
     except KeyError:
-        print("Error: Formato inesperado en los datos de OWM.")
-
+        print("[red]Error: Formato inesperado en los datos de OWM.[/red]"
+        "\n Volviendo a menu principal.") # OWM: OpenWeatherMap
+        return
+    
 # Función para ver el historial personal de consultas por ciudad
-
-
 def historialPersonal():
     try:
         with open(historialGlobales, 'r') as archivo_historial:
-            historial = archivo_historial.readlines()
+            print("Si desea volver al menu, escriba [underline]salir[/underline]. ❌")
             # Abrimos el historial global y pedimos por la ciudad
-            ciudad = input(
-                "Ingrese el nombre de la ciudad para ver su historial: 🏙️").strip()
-            print("Si desea salir del inicio de sesión, escriba [underline]salir[/underline]. ❌")
+            historial = archivo_historial.readlines()
+            ciudad = input("Ingrese el nombre de la ciudad para ver su historial: 🏙️ ").strip()
             if ciudad.lower() == "salir":
-                print("Saliendo del historial personal.")
+                print("Saliendo del historial personal. 🔙")
                 return
             if not ciudad:
-                print("Error: Debes ingresar el nombre de una ciudad.")
+                print("[red]Error: Debes ingresar el nombre de una ciudad.[/red]")
                 return
-            print(f"\nHistorial de consultas para {ciudad.capitalize()}:")
+            print(f"\nTu historial de consultas para {ciudad.capitalize()}:")
             encontrado = False
             contador = 0
             # Establecemos un contador para mostrar el nro de consultas
             # Y un booleano para saber si ya se encontró la ciudad, sino
-            # mostramos un mensaje de error diciendo que no se encontraron
-            # registros sobre aquella
+            # mostramos un mensaje de error diciendo que no se encontró en ninguna de sus consultas registradas
             for linea in historial:
                 # Verificar si la ciudad está en la línea (ignorando mayúsculas/minúsculas)
                 # y si el usuario autenticado es el que hizo la consulta
@@ -278,26 +294,39 @@ def historialPersonal():
                     contador += 1
                     datos = linea.strip().split(',')
                     print(
-                        f"nro:{contador}°\nCiudad 🏙️: {datos[1]} \nTemperatura 🌡️: {datos[3]}°C \nSensación Térmica 🤒: {datos[4]}°C \nHumedad 💧: {datos[5]}% \nDescripción 📖: {datos[6]} \nVelocidad del Viento 🍃: {datos[7]} m/s \nFecha y Hora ⏱️: {datos[2]}\n")
+                        f"[bold white]nro:{contador}°[bold white]"
+                        f"\n[bold]Ciudad 🏙️:[bold] [cyan]{datos[1]}[/cyan]"
+                        f"\n[bold]Temperatura 🌡️:[bold] [cyan]{datos[3]}°C [/cyan]"
+                        f"\n[bold]Sensación Térmica 🤒:[bold] [cyan]{datos[4]}°C [/cyan]"
+                        f"\n[bold]Humedad 💧:[bold] [cyan]{datos[5]}% [/cyan]"
+                        f"\n[bold]Descripción 📖:[bold] [cyan]{datos[6]} [/cyan]"
+                        f"\n[bold]Velocidad del Viento 🍃:[bold] [cyan]{datos[7]} m/s [/cyan]"
+                        f"\n[bold]Fecha y Hora ⏱️:[bold] [cyan]{datos[2]}\n[/cyan]")
             if not encontrado:
                 print(
-                    f"No se encontraron registros para la ciudad '{ciudad}' en el historial personal. 🤯")
+                    f"[yellow]No se encontraron registros para la ciudad '{ciudad}' en el historial personal. 🤯[/yellow]")
+            back = input("[italic]Presione enter si quiere volver atrás. [/italic]") #una vez que tereminó de ver todos los registros personales pregunta por volver
+            print("[bold italic]Volviendo a menu principal 🔙[/bold italic]")
+            return
     # Manejo de errores al abrir el archivo
     except FileNotFoundError:
         print(
-            f"Error: El archivo '{historialGlobales}' no existe. Asegúrate de que el historial global esté disponible.")
+            f"[red]Error: El archivo '{historialGlobales}' no existe. Asegúrate de que el historial global esté disponible.[/red]"
+        "\n Volviendo a menu principal.") # OWM: OpenWeatherMap
+        return
     except Exception as e:
-        print(f"Error inesperado: {e}")
+        print(f"[red]Error inesperado: {e}[/red]"
+        "\n Volviendo a menu principal.") # OWM: OpenWeatherMap
+        return
 
 # Función para exportar el historial global y mostrar estadísticas de uso globales
-
-
 def exportarHistorialEstadisticas():
     try:
         with open(historialGlobales, 'r') as archivo_historial:
             historial = archivo_historial.readlines()
             if not historial:
-                print("El historial global está vacío. No hay datos para analizar.")
+                print("[yellow]El historial global está vacío. No hay datos para analizar.[/yellow]"
+                      "\nVolviendo al menu principal.")
                 return
 
             # Saltar el encabezado
@@ -331,20 +360,27 @@ def exportarHistorialEstadisticas():
             temp_promedio = sum(temperaturas) / len(temperaturas)
 
             #Mostramos las estadísticas
-            print(f"\nEstadísticas globales del historial: 🌎")
+            print(f"\n========== ESTADÍSTICAS GLOBALES DEL HISTORIAL 🌎 ==========")
             print(f"- Número total de consultas realizadas: {total_consultas}")
             if len(ciudades_mas_consultadas) == 1:
-                print(f"- La ciudad con más consultas es '{ciudades_mas_consultadas[0].capitalize()} 👑' con {max_consultas} consultas.")
+                print(f"- La ciudad con más consultas es '{ciudades_mas_consultadas[0].capitalize()}' 👑 con {max_consultas} consultas.")
             else:
                 ciudades_str = ', '.join([c.capitalize() for c in ciudades_mas_consultadas])
                 print(f"- Las ciudades con más consultas son: {ciudades_str} 👑, cada una con {max_consultas} consultas.")
-                print(f"- Temperatura promedio entre todas las consultas: {temp_promedio:.2f}°C 🌡️")
+                print(f"- Temperatura promedio entre todas las consultas: [cyan]{temp_promedio:.2f}°C 🌡️[cyan]")
+            back = input("[italic]Presione enter si quiere volver atrás. [/italic]")
+            print("[bold italic]Volviendo a menu principal 🔙[/bold italic]") #una vez que ya se analizó todo, preugnta por vovler
+            return
     #Manejo de errores al abrir el archivo
     except FileNotFoundError:
         print(
-            f"Error: El archivo '{historialGlobales}' no existe. Asegúrate de que el historial global esté disponible.")
+            f"[red]Error: El archivo '{historialGlobales}' no existe. Asegúrate de que el historial global esté disponible.[/red]"
+            "\nVolviendo al menu principal.")
+        return
     except Exception as e:
-        print(f"Error inesperado: {e}")
+        print(f"[red]Error inesperado: {e}[/red]"
+        "\nVolviendo al menu principal.")
+        return
 # Función de IA
 
 def ia(temperatura, sensacion_termica, viento, humedad, condicion_climatica, ciudad):
@@ -365,7 +401,7 @@ def ia(temperatura, sensacion_termica, viento, humedad, condicion_climatica, ciu
             f"formateala de manera que quede lindo en una terminal de consola, ponele MUCHOS emojis.\n"
             f"no hagas un resuemen al final1"
         )
-        print("\n⚙️⚙️⚙️Generando consejo de vestimenta con IA⚙️⚙️⚙️")
+        print("\n ⚙️⚙️⚙️    Generando consejo de vestimenta con IA    ⚙️⚙️⚙️")
         response = model.generate_content(prompt_diseñado_por_equipo)
         if response.text:
             print(response.text)
@@ -375,8 +411,8 @@ def ia(temperatura, sensacion_termica, viento, humedad, condicion_climatica, ciu
             return "No se pudo generar un consejo en este momento."
                 #genera el contenido
     except Exception as e:
-        print(f"Error al contactar la API de Gemini o procesar la respuesta: {e}")
-        return "Error al generar el consejo de IA."
+        print(f"[red]Error al contactar la API de Gemini o procesar la respuesta: {e}[/red]")
+        return "[red]Error al generar el consejo de IA.[/red]"
 #funcion para extraer la info del historial_global.csv para usar en la ia
 def obtenerUltimoRegistroUsuario():
      try:
@@ -399,58 +435,61 @@ def obtenerUltimoRegistroUsuario():
          print("No se encontraron registros en el historial para el usuario.")
          return None
      except FileNotFoundError:
-         print(f"Error: El archivo '{historialGlobales}' no existe.")
+         print(f"[red]Error: El archivo '{historialGlobales}' no existe.[/red]")
          return None
      except Exception as e:
-         print(f"Error inesperado al leer el historial: {e}")
+         print(f"[red]Error inesperado al leer el historial: {e}[/red]")
          return None
 
 
 # función para mostrar información acerca del programa
 def acercaDe():
         print("""
-===Acerca de===
-Este programa se llama GuardianClimaITBA
-y es una aplicación de consola que permite 
-a los usuarios consultar el clima actual de
-diferentes ciudades, registrar sus consultas 
-y ver estadísticas globales de uso. 
-===============
-          
-===Uso===
-Los usuarios pueden iniciar sesión, registrarse,
-consultar el clima, ver su historial personal,
-exportar estadísticas globales y recibir recomendaciones
-de vestimenta basadas en el clima actual.
-==========
-          
-===Precauciones===
-El programa almacena las credenciales como son cargadas
-y no implementa medidas de seguridad avanzadas. Es solo
-para uso educativo y no debe usarse con claves reales.
-Existe el "hasheo" el cual permite trasncirbir las contraeñas
-a un formato no legible e irreversible. Pero se puede comparar
-con la contraseña ingresada por el usuario. Y asi saber si es
-correcta o no.
-Tanto la IA como la API para datos de clima son ajenas a nostros
-no contamos con control sobre ellas. Y el uso de los datos que se
-inrgesan en esta
-==================
+    ===== [yellow]Acerca de...[/yellow] =====
+    Este programa se llama GuardianClimaITBA
+    y es una aplicación de consola que permite 
+    a los usuarios consultar el clima actual de
+    diferentes ciudades, registrar sus consultas 
+    y ver estadísticas globales de uso. 
+    El programa segura que las contraseñas de los 
+    usuarios sean seguras, cumpliendo con critieros
+    como longitud larga, variedad de caracteres, aletioridad.
+    ============================
+            
+    ===== Uso =====
+    Los usuarios pueden iniciar sesión, registrarse,
+    consultar el clima, ver su historial personal,
+    exportar estadísticas globales y recibir recomendaciones
+    de vestimenta basadas en el clima actual.
+    ===============
+            
+    ===== Precauciones =====
+    El programa almacena las credenciales como son cargadas
+    y no implementa medidas de seguridad avanzadas. Es solo
+    para uso educativo y no debe usarse con claves reales.
+    Existe el "hasheo" el cual permite trasncirbir las contraeñas
+    a un formato no legible e irreversible. Pero se puede comparar
+    con la contraseña ingresada por el usuario. Y asi saber si es
+    correcta o no.
+    Tanto la IA como la API para datos de clima son ajenas a nostros
+    no contamos con control sobre ellas. Y el uso de los datos que se
+    inrgesan en esta
+    ========================
 
-falta: 
-▪ Obtención de datos de clima y guardado de historial global.
-▪ Generación de estadísticas globales y preparación del CSV
-para gráficos.
-          
-===Miembros===
-"Los Pros"
-1. Ulises Wolfzun
-2. Julieta Guerson
-3. Ana Gerly
-4. Dalila Sardi
-5. Sofia Patron
-==============
-""")
+    falta: 
+    ▪ Obtención de datos de clima y guardado de historial global.
+    ▪ Generación de estadísticas globales y preparación del CSV
+    para gráficos.
+            
+    ===Miembros===
+    "Los Pros"
+    1. Ulises Wolfzun
+    2. Julieta Guerson
+    3. Ana Gerli
+    4. Dalila Ayelen Sardi
+    5. Sofia Patron Costas
+    ==============
+    """)
 
 
 while running:
@@ -476,6 +515,8 @@ while running:
                 print("Opción no válida, por favor elige una opción del 1 al 3. 😡")
     else:
         # Osea el usuario SI esta autenticado aqui
+
+        print("\n============== MENU PRINCIPAL ===============")
         print("\n1. Consultar Clima Actual y Guardar en Historial Global 🌤️")
         print("2. Ver Mi Historial Personal de Consultas por Ciudad 🙍")
         print("3. Estadísticas Globales de Uso y Exportar Historial Completo 📊")
@@ -506,13 +547,18 @@ while running:
                     )
                 else:
                     print("Error al obtener el último registro del usuario.")
-                    
+                back = input("[italic]Presione enter si quiere volver atrás. [/italic]")
+                print("[bold italic]Volviendo a menu principal 🔙[/bold italic]")
+                continue
             case "5":
                 acercaDe()
+                back = input("[italic]Presione enter si quiere volver atrás. [/italic]")
+                print("[bold italic]Volviendo a menu principal 🔙[/bold italic]")
+                continue
             case "6":
                 # Si el usuario elige cerrar sesión, cambiamos el bool autenticated a False
                 # y vuelve al bucle del menú de inicio
                 autenticated = False
-                print("Cerrando sesión. Por favor, inicia sesión nuevamente. 👋")
+                print(f"Cerrando sesión. 👋➡")
             case _:
                 print("Opción no válida, por favor elige una opción del 1 al 6. 😡")
