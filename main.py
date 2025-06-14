@@ -21,6 +21,33 @@ api_key = os.getenv("key")
 gemini = os.getenv("gemini")
 usernameg = ""
 
+
+def archivosDatos():
+    global running
+    # Verificar que existan los archivos antes de abrirlos
+    if not os.path.exists(archivoUsuarios):
+        print(f"[red]Error: El archivo '{archivoUsuarios}' no existe. Por favor, crea el archivo antes de iniciar sesión.[/red]")
+        running = False
+        return
+    if not os.path.exists(historialGlobales):
+        print(f"[red]Error: El archivo '{historialGlobales}' no existe. Por favor, crea el archivo antes de iniciar sesión.[/red]")
+        running = False
+        return
+
+    # Ahora sí, abrir y verificar el contenido
+    for linea in open(historialGlobales, 'r'):
+        datos = linea.strip().split(',')
+        if len(datos) != 8:
+            print(f"[red]Error: El archivo '{historialGlobales}' no tiene el formato correcto. Asegúrate de que cada línea tenga 8 campos separados por comas.[/red]")
+            running = False
+            return
+
+    for linea in open(archivoUsuarios, 'r'):
+        datos = linea.strip().split(',')
+        if len(datos) != 2:
+            print(f"[red]Error: El archivo '{archivoUsuarios}' no tiene el formato correcto. Asegúrate de que cada línea tenga 2 campos separados por comas.[/red]")
+            running = False
+            return        
 # --- Función para inicio de sesión ---
 def logIn():
     global autenticated
@@ -568,6 +595,9 @@ def acercaDe():
     5. Sofia Patron Costas
     --------------------------------
     """)
+
+archivosDatos()
+
 
 # --- Bucle principal ---
 while running:
