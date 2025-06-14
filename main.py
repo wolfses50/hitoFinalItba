@@ -390,16 +390,19 @@ def ia(temperatura, sensacion_termica, viento, humedad, condicion_climatica, ciu
         genai.configure(api_key=gemini)
         model = genai.GenerativeModel('gemini-2.0-flash')
         prompt_diseñado_por_equipo =(
-            f"Hola, dime qué ropa debería usar hoy considerando estos datos:\n"
-            f"- Ciudad: {ciudad}°C\n"
-            f"- Temperatura: {temperatura}°C\n"
-            f"- Sensación térmica: {sensacion_termica}\n"
-            f"- Condición climática: {condicion_climatica}\n"
-            f"- Viento: {viento} m/s\n"
-            f"- Humedad: {humedad}%\n"
-            f"Sé claro y directo con una sugerencia útil para vestimenta. Comienza tu respuesta mencionando la ciudad"
-            f"formateala de manera que quede lindo en una terminal de consola, ponele MUCHOS emojis.\n"
-            f"no hagas un resuemen al final1"
+            f"""Te voy a dar datos del clima actual de una ciudad y quiero que me des un consejo de vestimenta.
+            Estas integrado en un prgrama de consola diseñado por un equipo de estudiantes del ITBA.
+            Los datos son los siguientes:
+            Ciudad: {ciudad}
+            Temperatura: {temperatura}°C
+            Sensación Térmica: {sensacion_termica}°C
+            Humedad: {humedad}%
+            Condición Climática: {condicion_climatica}
+            Velocidad del Viento: {viento} m/s
+            Basándote en estos datos, por favor proporciona un consejo de vestimenta adecuado para el clima actual.
+            tene en cuenta que el consejo debe ser claro y conciso, y debe incluir recomendaciones sobre qué tipo de ropa usar, si es necesario llevar paraguas o abrigo, etc.
+            El formato de la respuesta tiene que ser acorde a una terminal de consola.
+            Incluye emojis relacionados con el clima y la vestimenta para hacer el consejo más atractivo."""
         )
         print("\n ⚙️⚙️⚙️    Generando consejo de vestimenta con IA    ⚙️⚙️⚙️")
         response = model.generate_content(prompt_diseñado_por_equipo)
