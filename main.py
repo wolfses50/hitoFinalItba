@@ -65,7 +65,7 @@ def logIn():
 
 
 # --- Función para validar contraseña segura ---
-def validar_contraseña(password):
+def validarContraseña(password):
     errores = []
 
     # Criterio 1: Longitud mínima de 15 caracteres
@@ -90,11 +90,11 @@ def validar_contraseña(password):
     return errores
 
 # -- Función para generar una contraseña segura sugerida para el usuario --
-def generar_contraseña_segura(longitud=16):
+def generarContraseñaSegura(longitud=16):
     caracteres = string.ascii_letters + string.digits + "!@#$%^&*()_-+="
     while True:
         password = ''.join(random.choice(caracteres) for _ in range(longitud))
-        # Validamos con los mismos criterios que en validar_contraseña
+        # Validamos con los mismos criterios que en validarContraseña()
         if (any(c.islower() for c in password) and
             any(c.isupper() for c in password) and
             any(c.isdigit() for c in password) and
@@ -141,14 +141,14 @@ def register():
                 return
             
             # Validamos que la contraseña cumpla los 5 criterios
-            errores = validar_contraseña(password)
+            errores = validarContraseña(password)
             if len(errores) > 0:
                 print("\n[red]Tu contraseña no es lo suficientemente segura.[/red]")
                 print("No cumple con los siguientes criterios:")
                 for error in errores:
                     print(f"[dim yellow]- Debe {error}[/dim yellow]")
                 # Generamos y mostramos una sugerencia segura aleatoria
-                sugerencia = generar_contraseña_segura()
+                sugerencia = generarContraseñaSegura()
                 print("\nSugerencia: Usá una contraseña de al menos 15 caracteres, que incluya mayúsculas, minúsculas, números y símbolos. Te recomendamos que no se base en información personal, palabras comunes o patrones obvios, sino que sea lo mas aleatoria posible.")
                 print(f"Ejemplo de contraseña segura: {sugerencia}")
                 print("\nSi desea salir del registro de usuario, escriba [underline]salir[/underline]. ❌")
@@ -178,7 +178,7 @@ def register():
 def consultarClima():
     # Pedimos el nombre de la ciudad
     print("Si desea volver al menú, escriba [underline]salir[/underline]. ❌")
-    ciudad = input("Ingrese el nombre de la ciudad para consultar el clima: 🏙️  ").strip()
+    ciudad = input("Ingrese el nombre de la ciudad para consultar el clima: 🏙️\t  ").strip()
     if ciudad.lower() == "salir":
         print("[bold italic]Saliendo de la consulta del clima.[/bold italic]")
         return
@@ -235,7 +235,7 @@ def consultarClima():
                 f"{usuario},{ciudad},{fecha_hora},{temperatura},{sensacion_termica},{humedad},{descripcion},{velocidad_viento}\n")
         print("✅ Guardado")
         #return temperatura, ciudad, sensacion_termica, humedad, descripcion, velocidad_viento
-        input("\033[1mPresione enter si quiere volver atrás. \033[0m")
+        input("\033[1mPresione enter si quiere volver atrás.  \033[0m")
         print("[bold italic]Volviendo a menu principal 🔙[/bold italic]")
     
     # Manejo de errores de la API
@@ -272,7 +272,7 @@ def historialPersonal():
             print("Si desea volver al menu, escriba [underline]salir[/underline]. ❌")
             # Abrimos el historial global y pedimos por la ciudad
             historial = archivo_historial.readlines()
-            ciudad = input("Ingrese el nombre de la ciudad para ver su historial: 🏙️ ").strip()
+            ciudad = input("Ingrese el nombre de la ciudad para ver su historial: 🏙️ \t ").strip()
             if ciudad.lower() == "salir":
                 print("Saliendo del historial personal. 🔙")
                 return
@@ -381,8 +381,8 @@ def exportarHistorialEstadisticas():
         print(f"[red]Error inesperado: {e}[/red]"
         "\nVolviendo al menu principal.")
         return
+    
 # Función de IA
-
 def ia(temperatura, sensacion_termica, viento, humedad, condicion_climatica, ciudad):
      
      #obtiene un consejo  de vestimenta de gemini
