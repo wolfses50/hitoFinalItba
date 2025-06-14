@@ -235,7 +235,7 @@ def consultarClima():
                 f"{usuario},{ciudad},{fecha_hora},{temperatura},{sensacion_termica},{humedad},{descripcion},{velocidad_viento}\n")
         print("✅ Guardado")
         #return temperatura, ciudad, sensacion_termica, humedad, descripcion, velocidad_viento
-        back = input("[italic]Presione enter si quiere volver atrás. [/italic]")
+        input("\033[1mPresione enter si quiere volver atrás. \033[0m")
         print("[bold italic]Volviendo a menu principal 🔙[/bold italic]")
     
     # Manejo de errores de la API
@@ -305,7 +305,7 @@ def historialPersonal():
             if not encontrado:
                 print(
                     f"[yellow]No se encontraron registros para la ciudad '{ciudad}' en el historial personal. 🤯[/yellow]")
-            back = input("[italic]Presione enter si quiere volver atrás. [/italic]") #una vez que tereminó de ver todos los registros personales pregunta por volver
+            input("\033[1mPresione enter si quiere volver atrás. \033[0m") #una vez que tereminó de ver todos los registros personales pregunta por volver
             print("[bold italic]Volviendo a menu principal 🔙[/bold italic]")
             return
     # Manejo de errores al abrir el archivo
@@ -368,7 +368,7 @@ def exportarHistorialEstadisticas():
                 ciudades_str = ', '.join([c.capitalize() for c in ciudades_mas_consultadas])
                 print(f"- Las ciudades con más consultas son: {ciudades_str} 👑, cada una con {max_consultas} consultas.")
                 print(f"- Temperatura promedio entre todas las consultas: [cyan]{temp_promedio:.2f}°C 🌡️[cyan]")
-            back = input("[italic]Presione enter si quiere volver atrás. [/italic]")
+            input("\033[1mPresione enter si quiere volver atrás. \033[0m")
             print("[bold italic]Volviendo a menu principal 🔙[/bold italic]") #una vez que ya se analizó todo, preugnta por vovler
             return
     #Manejo de errores al abrir el archivo
@@ -547,12 +547,12 @@ while running:
                     )
                 else:
                     print("Error al obtener el último registro del usuario.")
-                back = input("[italic]Presione enter si quiere volver atrás. [/italic]")
+                input("\033[1mPresione enter si quiere volver atrás. \033[0m")
                 print("[bold italic]Volviendo a menu principal 🔙[/bold italic]")
                 continue
             case "5":
                 acercaDe()
-                back = input("[italic]Presione enter si quiere volver atrás. [/italic]")
+                input("\033[1mPresione enter si quiere volver atrás. \033[0m")
                 print("[bold italic]Volviendo a menu principal 🔙[/bold italic]")
                 continue
             case "6":
