@@ -391,18 +391,40 @@ def ia(temperatura, sensacion_termica, viento, humedad, condicion_climatica, ciu
     try: 
         genai.configure(api_key=gemini)
         model = genai.GenerativeModel('gemini-2.0-flash')
-        prompt_diseñado_por_equipo =(
-            f"Hola, dime qué ropa debería usar hoy considerando estos datos:\n"
-            f"- Ciudad: {ciudad}°C\n"
-            f"- Temperatura: {temperatura}°C\n"
-            f"- Sensación térmica: {sensacion_termica}\n"
-            f"- Condición climática: {condicion_climatica}\n"
-            f"- Viento: {viento} m/s\n"
-            f"- Humedad: {humedad}%\n"
-            f"Sé claro y directo con una sugerencia útil para vestimenta. Comienza tu respuesta mencionando la ciudad"
-            f"formateala de manera que quede lindo en una terminal de consola, ponele MUCHOS emojis.\n"
-            f"no hagas un resuemen al final1"
-        )
+        prompt_diseñado_por_equipo = (
+    f"""Estás embebido en un programa de consola desarrollado por estudiantes del ITBA.
+    Se te proporcionan datos del clima actual y tu tarea es generar un CONSEJO DE VESTIMENTA.
+
+    IMPORTANTE:
+    - NO debes incluir funciones de Python como print(), ni declarar variables, ni envolver la respuesta en código.
+    - Tu salida debe ser un **string plano formateado** como si fuera la respuesta directa a mostrar en consola.
+    - Disponemos de la librería [rich](https://rich.readthedocs.io/) para formateo en consola. Puedes usar etiquetas como:
+    [bold], [italic], [cyan], [yellow], [green], [blue], etc. para resaltar partes del texto.
+    - Incluí EMOJIS relevantes al clima y a la vestimenta (🌧️🧥☀️👕☂️🧢🧣🕶️) para hacerlo más atractivo.
+    - Sé claro, conciso y práctico. El consejo debe mencionar:
+    - Qué tipo de ropa usar
+    - Si es necesario llevar paraguas, abrigo, protector solar, etc.
+
+    Datos del clima:
+    Ciudad: {ciudad}
+    Temperatura: {temperatura}°C
+    Sensación Térmica: {sensacion_termica}°C
+    Humedad: {humedad}%
+    Condición Climática: {condicion_climatica}
+    Velocidad del Viento: {viento} m/s
+
+    Tu respuesta debe ser SOLO el texto final que se mostrará al usuario en consola, utilizando rich y emojis según corresponda. No olvides dejar lineas entre el texto para que sea más legible.
+    segui el siguiente formato de ejemplo:
+    '¡Atención, Buenos Aires! 🌧️ Con 10.33°C y llovizna, te recomiendo:
+
+    🧥 Abrigo impermeable o rompevientos.
+    🧣 Bufanda y guantes para mayor confort.
+    ☂️ No olvides el paraguas o piloto.
+    👕 Opta por capas de ropa para adaptarte a los cambios de temperatura.
+    ¡Que tengas un buen día!'
+
+    """
+    )
         print("\n ⚙️⚙️⚙️    Generando consejo de vestimenta con IA    ⚙️⚙️⚙️")
         response = model.generate_content(prompt_diseñado_por_equipo)
         if response.text:
