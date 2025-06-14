@@ -470,43 +470,85 @@ def obtenerUltimoRegistroUsuario():
 def acercaDe():
         print("""
     ===== [bold magenta]Acerca de...[/bold magenta] =====
-    Guardían Clima ITBA es una aplicación interactiva con fines
+    Guardián Clima ITBA es una aplicación interactiva con fines
     educativos. Permite a los usuarios consultar datos sobre el
     clima actual de distintas ciudades, guardar y acceder a un
-    historial personal y uno global, y a pedir a una IA
-    recomendaciones de vestimenta acorde al clima.    
+    historial personal y uno global, y pedir recomendaciones de 
+    vestimenta a una IA acorde al clima.    
             
-    -------------[magenta] 🧩 Uso 🧩[/magenta]-------------
-    En el menu de inicio, el usuario puede elegir [bold]iniciar sesión[/bold],
-    [bold]salir del programa[/bold] o [bold]registrarse[/bold]. En cuanto al último, se 
-    implementaron criterios estrictos para usar contraseñas robustas.
-    Una vez iniciada la sesión, el usuario puede acceder a
-    diferentes opciones:
-     🔹 [bold]Consular el clima actual de una ciudad a elección[/bold], mediante
-        la API de OpenWeatherMap. Los datos de esta consulta son
-        guardados junto con el nombre de usuario y la fecha y hora.
-     🔹 [bold]Historial personal de consultas[/bold] anteriores del usuario, 
-        filtradas por ciudad especificada.
-     🔹 [bold]Estadísticas globales[/bold]: analiza el historial de consultas completo
-        para calcular la ciudad más consultada, temperatura promedio y el
-        total de búsquedas. Además, genera un archivo CSV listo para ser 
-        graficado.
-     🔹 [bold]Asistente de vestimenta con IA[/bold] según el clima recién consultado, 
-        usando Google Gemini.
+    -------------[magenta] 🧩 Menú de acceso 🧩[/magenta]-------------
+    Al iniciar la aplicación, se presenta un menú con tres opciones:
+    🔹 [bold]Iniciar sesión:[/bold] se solicita el nombre de usuario y la contraseña. 
+            Si los datos coinciden con el archivo `usuarios_simulados.csv`,
+            el usuario accede al menú principal.
+    🔹 [bold]Registrarse:[/bold] permite crear un nuevo usuario. Para avanzar, el nombre
+            no debe estar repetido y la contraseña debe cumplir con todos los 
+            criterios de seguridad establecidos.
+    🔹 [bold]Salir:[/bold] cierra la aplicación.
+    
+    Durante el registro, el sistema valida que la contraseña cumpla con 5 criterios:
+    🔹 Al menos 15 caracteres
+    🔹 Una mayúscula
+    🔹 Una minúscula
+    🔹 Un número
+    🔹 Un símbolo (como !, @, #, etc.)
+
+    Si la contraseña no los cumple, se informa qué falló y se sugiere una contraseña 
+    segura generada aleatoriamente.
+          
+    -------------[magenta] 🧩 Menú principal 🧩[/magenta]-------------
+    Una vez autenticado, el usuario puede acceder a diferentes opciones:
+     🔹 [bold]Consultar el clima actual[/bold]: 
+            El usuario ingresa una ciudad. Se consulta la API de OpenWeatherMap y se muestra:
+                - Temperatura
+                - Sensación térmica
+                - Humedad
+                - Viento
+                - Descripción del clima
+            
+            Los resultados se guardan automáticamente en el archivo `historial_global.csv`,
+            junto con la fecha, la hora y el nombre de usuario.
+
+     🔹 [bold]Ver historial personal[/bold]:
+            Permite al usuario buscar su historial de consultas anteriores, filtradas por ciudad.
+              
+     🔹 [bold]Estadísticas globales[/bold]: 
+            Se procesan todos los datos del archivo `historial_global.csv` para mostrar:
+                - Ciudad más consultada
+                - Temperatura promedio
+                - Cantidad total de consultas
+
+            Estos datos pueden exportarse a un archivo `.csv` que luego puede graficarse 
+            con herramientas como Excel o Google Sheets.
+
+     🔹 [bold]Asistente de vestimenta con IA[/bold]:
+              Utiliza la API de Google Gemini para generar un consejo de vestimenta personalizado, 
+              considerando la temperatura, humedad, sensación térmica, viento y condición climática
+              de la última ciudad consultada por el usuario.
+
+     🔹 [bold]Acerca de[/bold]:
+            Muestra esta descripción.
+
+     🔹 [bold]Cerrar sesión[/bold]:
+            Vuelve al menú de inicio.
     -------------------------------------
             
-    -------[magenta] ⚠ Precauciones ⚠ [/magenta]-------
-    El programa almacena las credenciales como son cargadas
-    y no implementa medidas de seguridad avanzadas. Esto se debe a
-    que el programa es solo para uso educativo y no debe usarse con
-    claves reales.
-    Existe el "hasheo" el cual permite trasncirbir las contraeñas
-    a un formato no legible e irreversible. Pero se puede comparar
-    con la contraseña ingresada por el usuario, para saber si es
-    correcta o no.
-    Tanto la IA como la API para datos de clima son ajenas a nostros.
-    No contamos con control sobre ellas y el uso de los datos que se
-    inregesan en esta.
+    -------[magenta] ⚠ Seguridad y limitaciones ⚠ [/magenta]-------
+    La aplicación almacena las contraseñas en texto plano sin implementar medidas
+    de seguridad avanzadas debido a que el programa es solo para uso educativo. 
+    Se advierte que esto [bold]no es seguro[/bold] y no debe hacerse en entornos reales.
+              
+    En un sistema real, se utilizarían técnicas como el *hashing*, el cual permite transcribir
+    las contraseñas a un formato no legible e irreversible, pero permitiendo que se puedan 
+    comparar con la ingresada por el usuario, para saber si es correcta o no.
+
+    Las claves de las APIs utilizadas están protegidas mediante un archivo `.env` 
+    local y no se exponen en el código fuente.
+
+    Tanto la API de OpenWeatherMap como la IA de Gemini son servicios externos. 
+    La aplicación no tiene control sobre sus respuestas ni sobre el uso de los 
+    datos ingresados.
+
     ---------------------------------
             
     -----[magenta] 👥 Equipo desarrollador 👥 [/magenta]-----
