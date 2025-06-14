@@ -11,6 +11,11 @@ Para ejecutar el programa,
     ```bash
     pip install -r requirements.txt
     ```
+    y luego:
+    
+    ```bash
+    pip install rich
+    ```
 
     3. Crear un archivo .env con tus claves de API (ver más abajo).
     4. Ejecutar el archivo principal:
@@ -119,7 +124,7 @@ Grupo:
 
     Julieta Guerson
 
-    Ana Gerly
+    Ana Gerli
 
     Dalila Sardi
 
