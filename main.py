@@ -24,7 +24,8 @@ usernameg = ""
 
 def archivosDatos():
     global running
-    # Verificar que existan los archivos antes de abrirlos
+    #Verificamos que los archivos necesarios existan, sino tira un error y el bolleano running pasa a False
+    #Asi nunca levanta el bucle principal
     if not os.path.exists(archivoUsuarios):
         print(f"[red]Error: El archivo '{archivoUsuarios}' no existe. Por favor, crea el archivo antes de iniciar sesión.[/red]")
         running = False
@@ -34,7 +35,8 @@ def archivosDatos():
         running = False
         return
 
-    # Ahora sí, abrir y verificar el contenido
+    #Verificamos que cuenten con las columnas correctas
+    #Caso contrario running pasa a False y no levanta el bucle principal
     for linea in open(historialGlobales, 'r'):
         datos = linea.strip().split(',')
         if len(datos) != 8:
@@ -48,6 +50,7 @@ def archivosDatos():
             print(f"[red]Error: El archivo '{archivoUsuarios}' no tiene el formato correcto. Asegúrate de que cada línea tenga 2 campos separados por comas.[/red]")
             running = False
             return        
+        
 # --- Función para inicio de sesión ---
 def logIn():
     global autenticated
