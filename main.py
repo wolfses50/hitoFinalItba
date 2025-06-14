@@ -68,9 +68,9 @@ def logIn():
 def validar_contraseña(password):
     errores = []
 
-    # Criterio 1: Longitud mínima de 12 caracteres
-    if len(password) < 12:
-        errores.append("[italic]tener al menos 12 caracteres[/italic]")
+    # Criterio 1: Longitud mínima de 15 caracteres
+    if len(password) < 15:
+        errores.append("[italic]tener al menos 15 caracteres[/italic]")
 
     # Criterio 2: Contener letras mayúsculas
     if not re.search(r"[A-Z]", password):
@@ -140,16 +140,16 @@ def register():
                 print("[bold italic]Saliendo del registro.[bold italic]")
                 return
             
-            # Validamos que la contraseña cumpla al menos 3 criterios
+            # Validamos que la contraseña cumpla los 5 criterios
             errores = validar_contraseña(password)
-            if len(errores) > 2:
+            if len(errores) > 0:
                 print("\n[red]Tu contraseña no es lo suficientemente segura.[/red]")
                 print("No cumple con los siguientes criterios:")
                 for error in errores:
                     print(f"[dim yellow]- Debe {error}[/dim yellow]")
                 # Generamos y mostramos una sugerencia segura aleatoria
                 sugerencia = generar_contraseña_segura()
-                print("\nSugerencia: Usá una contraseña de al menos 12 caracteres, que incluya mayúsculas, minúsculas, números y símbolos.")
+                print("\nSugerencia: Usá una contraseña de al menos 15 caracteres, que incluya mayúsculas, minúsculas, números y símbolos. Te recomendamos que no se base en información personal, palabras comunes o patrones obvios, sino que sea lo mas aleatoria posible.")
                 print(f"Ejemplo de contraseña segura: {sugerencia}")
                 print("\nSi desea salir del registro de usuario, escriba [underline]salir[/underline]. ❌")
             else:    
