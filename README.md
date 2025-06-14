@@ -12,7 +12,7 @@ Para ejecutar el programa,
     pip install -r requirements.txt
     ```
 
-    3. Crear un archivo .env con tus claves de API (ver más abajo).
+    3. Crear un archivo .env a partir de .env.template con tus claves de API (ver más abajo).
     4. Ejecutar el archivo principal:
 
     ```bash
