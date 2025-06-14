@@ -113,7 +113,9 @@ El acceso a las APIs depende de proveedores externos (OpenWeatherMap y Google Ge
 La respuesta de la IA puede variar y no siempre será precisa.
 
 ## Créditos
-Grupo: 
+Grupo: Los Pros
+
+Integrantes:
 
     Ulises Wolfzun
 
@@ -125,4 +127,4 @@ Grupo:
 
     Sofía Patrón Costas
 
-Proyecto desarrollado para el Challenge Tecnológico Integrador - ITBA.
+Proyecto desarrollado para el Challenge Tecnológico Integrador - ITBA - Curso de Admisión 2025.

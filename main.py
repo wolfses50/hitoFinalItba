@@ -149,7 +149,9 @@ def register():
                     print(f"[dim yellow]- Debe {error}[/dim yellow]")
                 # Generamos y mostramos una sugerencia segura aleatoria
                 sugerencia = generarContraseñaSegura()
-                print("\nSugerencia: Usá una contraseña de al menos 15 caracteres, que incluya mayúsculas, minúsculas, números y símbolos. Te recomendamos que no se base en información personal, palabras comunes o patrones obvios, sino que sea lo mas aleatoria posible.")
+                print("\nSugerencia: Usá una contraseña de al menos 15 caracteres, que incluya mayúsculas, minúsculas, números y símbolos. "
+                "Te recomendamos que no se base en información personal, palabras comunes o patrones obvios, "
+                "sino que sea lo mas aleatoria posible.")
                 print(f"Ejemplo de contraseña segura: {sugerencia}")
                 print("\nSi desea salir del registro de usuario, escriba [underline]salir[/underline]. ❌")
             else:    
@@ -445,50 +447,54 @@ def obtenerUltimoRegistroUsuario():
 # función para mostrar información acerca del programa
 def acercaDe():
         print("""
-    ===== [yellow]Acerca de...[/yellow] =====
-    Este programa se llama GuardianClimaITBA
-    y es una aplicación de consola que permite 
-    a los usuarios consultar el clima actual de
-    diferentes ciudades, registrar sus consultas 
-    y ver estadísticas globales de uso. 
-    El programa segura que las contraseñas de los 
-    usuarios sean seguras, cumpliendo con critieros
-    como longitud larga, variedad de caracteres, aletioridad.
-    ============================
+    ===== [bold magenta]Acerca de...[/bold magenta] =====
+    Guardían Clima ITBA es una aplicación interactiva con fines
+    educativos. Permite a los usuarios consultar datos sobre el
+    clima actual de distintas ciudades, guardar y acceder a un
+    historial personal y uno global, y a pedir a una IA
+    recomendaciones de vestimenta acorde al clima.    
             
-    ===== Uso =====
-    Los usuarios pueden iniciar sesión, registrarse,
-    consultar el clima, ver su historial personal,
-    exportar estadísticas globales y recibir recomendaciones
-    de vestimenta basadas en el clima actual.
-    ===============
+    -------------[magenta] 🧩 Uso 🧩[/magenta]-------------
+    En el menu de inicio, el usuario puede elegir [bold]iniciar sesión[/bold],
+    [bold]salir del programa[/bold] o [bold]registrarse[/bold]. En cuanto al último, se 
+    implementaron criterios estrictos para usar contraseñas robustas.
+    Una vez iniciada la sesión, el usuario puede acceder a
+    diferentes opciones:
+     🔹 [bold]Consular el clima actual de una ciudad a elección[/bold], mediante
+        la API de OpenWeatherMap. Los datos de esta consulta son
+        guardados junto con el nombre de usuario y la fecha y hora.
+     🔹 [bold]Historial personal de consultas[/bold] anteriores del usuario, 
+        filtradas por ciudad especificada.
+     🔹 [bold]Estadísticas globales[/bold]: analiza el historial de consultas completo
+        para calcular la ciudad más consultada, temperatura promedio y el
+        total de búsquedas. Además, genera un archivo CSV listo para ser 
+        graficado.
+     🔹 [bold]Asistente de vestimenta con IA[/bold] según el clima recién consultado, 
+        usando Google Gemini.
+    -------------------------------------
             
-    ===== Precauciones =====
+    -------[magenta] ⚠ Precauciones ⚠ [/magenta]-------
     El programa almacena las credenciales como son cargadas
-    y no implementa medidas de seguridad avanzadas. Es solo
-    para uso educativo y no debe usarse con claves reales.
+    y no implementa medidas de seguridad avanzadas. Esto se debe a
+    que el programa es solo para uso educativo y no debe usarse con
+    claves reales.
     Existe el "hasheo" el cual permite trasncirbir las contraeñas
     a un formato no legible e irreversible. Pero se puede comparar
-    con la contraseña ingresada por el usuario. Y asi saber si es
+    con la contraseña ingresada por el usuario, para saber si es
     correcta o no.
-    Tanto la IA como la API para datos de clima son ajenas a nostros
-    no contamos con control sobre ellas. Y el uso de los datos que se
-    inrgesan en esta
-    ========================
-
-    falta: 
-    ▪ Obtención de datos de clima y guardado de historial global.
-    ▪ Generación de estadísticas globales y preparación del CSV
-    para gráficos.
+    Tanto la IA como la API para datos de clima son ajenas a nostros.
+    No contamos con control sobre ellas y el uso de los datos que se
+    inregesan en esta.
+    ---------------------------------
             
-    ===Miembros===
+    -----[magenta] 👥 Equipo desarrollador 👥 [/magenta]-----
     "Los Pros"
     1. Ulises Wolfzun
     2. Julieta Guerson
     3. Ana Gerli
     4. Dalila Ayelen Sardi
     5. Sofia Patron Costas
-    ==============
+    --------------------------------
     """)
 
 
