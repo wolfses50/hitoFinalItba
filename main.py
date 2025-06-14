@@ -48,6 +48,7 @@ def archivosDatos():
             print(f"[red]Error: El archivo '{archivoUsuarios}' no tiene el formato correcto. Asegúrate de que cada línea tenga 2 campos separados por comas.[/red]")
             running = False
             return        
+
 # --- Función para inicio de sesión ---
 def logIn():
     global autenticated
